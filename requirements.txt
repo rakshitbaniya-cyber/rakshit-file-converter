@@ -1,0 +1,6 @@
+Flask
+waitress
+PyMuPDF
+Pillow
+openpyxl
+gunicorn
