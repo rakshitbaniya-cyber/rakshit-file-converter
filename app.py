@@ -42,6 +42,12 @@ if SITE_URL:
         raise ValueError("SITE_URL must be a valid https:// website URL")
 
 app = Flask(__name__)
+@app.route("/google2e95d266378fddc4.html")
+def google_site_verification():
+    return send_file(
+        BASE / "google2e95d266378fddc4.html",
+        mimetype="text/html"
+    )
 app.secret_key = os.environ.get("SECRET_KEY") or secrets.token_hex(32)
 app.config["MAX_CONTENT_LENGTH"] = 25 * 1024 * 1024
 app.config["SESSION_COOKIE_HTTPONLY"] = True
