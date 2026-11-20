@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Rakshit File Converter</title>
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f6fb;
+            color: #172033;
+        }
+
+        header {
+            background: #14213d;
+            color: white;
+            padding: 22px;
+            text-align: center;
+        }
+
+        main {
+            max-width: 700px;
+            margin: 35px auto;
+            padding: 20px;
+        }
+
+        .setting {
+            background: white;
+            padding: 22px;
+            margin-bottom: 16px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px #00000010;
+        }
+
+        select, button {
+            padding: 12px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background: #2457d6;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        a { color: #2457d6; }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Rakshit File Converter</h1>
+    <p>Website Settings</p>
+</header>
+
+<main>
+    <h2>Settings</h2>
+
+    <div class="setting">
+        <h3>Language</h3>
+        <p>Select your preferred language.</p>
+
+        <select id="language">
+            <option value="English">English</option>
+            <option value="Hindi">Hindi</option>
+        </select>
+
+        <button onclick="saveLanguage()">Save Language</button>
+        <p id="message"></p>
+    </div>
+
+    <div class="setting">
+        <h3>Account</h3>
+        <p>Manage your account information.</p>
+        <a href="/profile">Open Profile</a>
+    </div>
+
+    <div class="setting">
+        <h3>Login & Registration</h3>
+        <p>Access your account or create a new account.</p>
+        <a href="/login">Login</a> |
+        <a href="/register">Register</a>
+    </div>
+
+    <p><a href="/">← Back to Home</a></p>
+</main>
+
+<script>
+    const language = document.getElementById("language");
+
+    language.value = localStorage.getItem("rfc_language") || "English";
+
+    function saveLanguage() {
+        localStorage.setItem("rfc_language", language.value);
+        document.getElementById("message").textContent =
+            "Language preference saved on this device.";
+    }
+</script>
+
+</body>
+</html>
