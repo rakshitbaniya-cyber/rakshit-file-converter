@@ -4,31 +4,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rakshit File Converter</title>
+
+    <title>Rakshit File Converter - Free Online Tools</title>
+
+    <meta name="description" content="Use free online PDF and image tools with Rakshit File Converter.">
+
     <style>
-        * { box-sizing: border-box; }
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
             font-family: Arial, sans-serif;
             background: #f3f6fb;
             color: #172033;
         }
+
         header {
             background: #14213d;
             color: white;
             padding: 22px;
             text-align: center;
         }
+
+        header h1 {
+            margin: 0;
+        }
+
+        nav {
+            margin-top: 16px;
+        }
+
+        nav a {
+            color: white;
+            margin: 6px 10px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
         main {
             max-width: 1100px;
             margin: 30px auto;
             padding: 15px;
         }
+
+        .welcome {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .search-box {
+            max-width: 650px;
+            margin: 22px auto;
+        }
+
+        #toolSearch {
+            width: 100%;
+            padding: 16px;
+            border: 1px solid #ccd3df;
+            border-radius: 10px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        #toolSearch:focus {
+            border-color: #2457d6;
+            box-shadow: 0 0 0 3px #2457d620;
+        }
+
+        .category {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .category button {
+            padding: 10px 16px;
+            margin: 5px;
+            border: 0;
+            border-radius: 20px;
+            background: white;
+            color: #2457d6;
+            cursor: pointer;
+        }
+
+        .category button.active,
+        .category button:hover {
+            background: #2457d6;
+            color: white;
+        }
+
         .tools {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
             gap: 16px;
         }
+
         .tool {
             background: white;
             padding: 22px;
@@ -36,36 +111,199 @@
             text-decoration: none;
             color: #172033;
             box-shadow: 0 3px 12px #00000010;
+            transition: 0.2s;
         }
-        .tool:hover { background: #eaf1ff; }
-        .tool h3 { margin-top: 0; color: #2457d6; }
-        nav { margin-top: 12px; }
-        nav a { color: white; margin: 0 8px; }
+
+        .tool:hover {
+            background: #eaf1ff;
+            transform: translateY(-3px);
+        }
+
+        .tool h3 {
+            margin-top: 0;
+            color: #2457d6;
+        }
+
+        .tool p {
+            line-height: 1.5;
+            color: #596579;
+        }
+
+        .no-results {
+            display: none;
+            text-align: center;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+        }
+
+        footer {
+            margin-top: 45px;
+            padding: 22px;
+            text-align: center;
+            background: #14213d;
+            color: white;
+        }
+
+        footer a {
+            color: white;
+        }
+
+        @media (max-width: 500px) {
+            header {
+                padding: 18px 10px;
+            }
+
+            nav a {
+                margin: 7px;
+            }
+
+            .tools {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
+
 <body>
+
 <header>
     <h1>Rakshit File Converter</h1>
     <p>Free Online PDF and Image Tools</p>
+
     <nav>
         <a href="/">Home</a>
         <a href="/settings">Settings</a>
         <a href="/profile">Profile</a>
-        <a href="/login">Login</a>
-        <a href="/register">Register</a>
+
+        {% if current_user %}
+            <a href="/logout">Logout</a>
+        {% else %}
+            <a href="/login">Login</a>
+            <a href="/register">Register</a>
+        {% endif %}
     </nav>
 </header>
 
 <main>
-    <h2>All Tools</h2>
-    <div class="tools">
+
+    <section class="welcome">
+        <h2>All Online Tools</h2>
+        <p>Choose a tool or search for the tool you need.</p>
+
+        <div class="search-box">
+            <input
+                type="search"
+                id="toolSearch"
+                placeholder="🔍 Search tools... e.g. PDF Merge, Image Converter"
+                aria-label="Search tools"
+            >
+        </div>
+    </section>
+
+    <div class="category">
+        <button class="active" data-category="all">All Tools</button>
+        <button data-category="pdf">PDF Tools</button>
+        <button data-category="image">Image Tools</button>
+        <button data-category="other">Other Tools</button>
+    </div>
+
+    <div class="tools" id="toolsContainer">
+
         {% for tool in tools %}
-        <a class="tool" href="/tools/{{ tool[1] }}">
+
+        <a
+            class="tool"
+            href="/tools/{{ tool[1] }}"
+            data-name="{{ tool[0]|lower }}"
+            data-description="{{ tool[2]|lower }}"
+            data-slug="{{ tool[1] }}"
+        >
             <h3>{{ tool[0] }}</h3>
             <p>{{ tool[2] }}</p>
         </a>
+
         {% endfor %}
+
     </div>
+
+    <div class="no-results" id="noResults">
+        <h3>No tools found</h3>
+        <p>Try another search keyword.</p>
+    </div>
+
 </main>
+
+<footer>
+    <p>© 2026 Rakshit File Converter</p>
+    <p>Free Online File Conversion Tools</p>
+</footer>
+
+<script>
+    const searchInput = document.getElementById("toolSearch");
+    const toolCards = document.querySelectorAll(".tool");
+    const categoryButtons = document.querySelectorAll(".category button");
+    const noResults = document.getElementById("noResults");
+
+    let selectedCategory = "all";
+
+    function filterTools() {
+        const search = searchInput.value.toLowerCase().trim();
+        let visibleCount = 0;
+
+        toolCards.forEach(card => {
+            const name = card.dataset.name;
+            const description = card.dataset.description;
+            const slug = card.dataset.slug;
+
+            const searchMatch =
+                name.includes(search) ||
+                description.includes(search) ||
+                slug.includes(search);
+
+            let categoryMatch = true;
+
+            if (selectedCategory === "pdf") {
+                categoryMatch = slug.includes("pdf") ||
+                    slug.includes("word-to-pdf") ||
+                    slug.includes("excel-to-pdf") ||
+                    slug.includes("powerpoint-to-pdf");
+            } else if (selectedCategory === "image") {
+                categoryMatch = slug.includes("image") ||
+                    slug.includes("jpg");
+            } else if (selectedCategory === "other") {
+                categoryMatch = !slug.includes("pdf") &&
+                    !slug.includes("image") &&
+                    !slug.includes("jpg");
+            }
+
+            if (searchMatch && categoryMatch) {
+                card.style.display = "";
+                visibleCount++;
+            } else {
+                card.style.display = "none";
+            }
+        });
+
+        noResults.style.display =
+            visibleCount === 0 ? "block" : "none";
+    }
+
+    searchInput.addEventListener("input", filterTools);
+
+    categoryButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            categoryButtons.forEach(btn =>
+                btn.classList.remove("active")
+            );
+
+            button.classList.add("active");
+            selectedCategory = button.dataset.category;
+
+            filterTools();
+        });
+    });
+</script>
+
 </body>
 </html>
