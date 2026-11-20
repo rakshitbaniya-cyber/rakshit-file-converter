@@ -233,68 +233,124 @@
             margin-top: 20px;
         }
 
-        .feedback-section {
-            max-width: 700px;
-            margin: 65px auto 40px;
-            padding: 30px;
-            background: white;
-            border: 1px solid #e7ebf2;
-            border-radius: 16px;
-            box-shadow: 0 4px 15px #00000008;
-        }
 
-        .feedback-section h2 {
-            text-align: center;
-            margin-top: 0;
-        }
+/* Feedback Section */
 
-        .feedback-section > p {
-            text-align: center;
-            color: #68758a;
-            line-height: 1.5;
-        }
+.feedback-section {
+    max-width: 750px;
+    margin: 65px auto 40px;
+    padding: 30px;
+    background: white;
+    border: 1px solid #e7ebf2;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px #00000008;
+}
 
-        .feedback-section label {
-            display: block;
-            margin: 18px 0 8px;
-            font-weight: bold;
-        }
+.feedback-section h2 {
+    text-align: center;
+    margin-top: 0;
+    font-size: 28px;
+}
 
-        .feedback-section select,
-        .feedback-section textarea {
-            width: 100%;
-            padding: 13px;
-            border: 1px solid #d5dce8;
-            border-radius: 9px;
-            font: inherit;
-        }
+.feedback-section > p {
+    text-align: center;
+    color: #68758a;
+    line-height: 1.5;
+}
 
-        .feedback-section textarea {
-            min-height: 110px;
-            resize: vertical;
-        }
+.feedback-section label {
+    display: block;
+    margin: 18px 0 8px;
+    font-weight: bold;
+}
 
-        .feedback-submit {
-            width: 100%;
-            padding: 14px;
-            margin-top: 18px;
-            border: none;
-            border-radius: 9px;
-            background: #315de8;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-        }
+.rating-heading {
+    font-size: 17px;
+}
 
-        .feedback-submit:hover {
-            background: #244bc2;
-        }
+.star-rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 650px;
+    gap: 8px;
+    margin: 20px 0 30px;
+}
 
-        #feedbackMessage {
-            text-align: center;
-            margin-top: 15px;
-            font-weight: bold;
-        }
+.star-rating input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.star-rating label {
+    font-size: clamp(45px, 12vw, 110px);
+    color: #d1d5db;
+    cursor: pointer;
+    margin: 0;
+    line-height: 1;
+    transition: 0.2s;
+}
+
+.star-rating label:hover,
+.star-rating label:hover ~ label,
+.star-rating input:checked ~ label {
+    color: #ffbf00;
+}
+
+.star-rating label:hover {
+    transform: scale(1.08);
+}
+
+.star-rating input:focus-visible + label {
+    outline: 2px solid #315de8;
+    outline-offset: 4px;
+}
+
+.feedback-section textarea {
+    width: 100%;
+    min-height: 110px;
+    padding: 13px;
+    border: 1px solid #d5dce8;
+    border-radius: 9px;
+    font: inherit;
+    resize: vertical;
+}
+
+.feedback-submit {
+    width: 100%;
+    padding: 14px;
+    margin-top: 18px;
+    border: none;
+    border-radius: 9px;
+    background: #315de8;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.feedback-submit:hover {
+    background: #244bc2;
+}
+
+#feedbackMessage {
+    text-align: center;
+    margin-top: 15px;
+    font-weight: bold;
+}
+
+@media (max-width: 650px) {
+    .feedback-section {
+        padding: 22px;
+    }
+
+    .star-rating {
+        gap: 3px;
+    }
+}
+
 
         footer {
             margin-top: 50px;
@@ -690,22 +746,50 @@
         <p>Try another search keyword.</p>
     </div>
 
-    <section class="feedback-section">
-        <h2>Share Your Feedback</h2>
-        <p>Your feedback helps us improve Toolify.</p>
+    
+<section class="feedback-section">
+    <h2>Share Your Feedback</h2>
+    <p>Your feedback helps us improve Toolify.</p>
 
-        <form id="feedbackForm">
+    <form id="feedbackForm">
 
-            <label for="rating">Rate your experience *</label>
+        <label class="rating-heading">Rate your experience *</label>
 
-            <select id="rating" name="rating" required>
-                <option value="">Select your rating</option>
-                <option value="5">⭐⭐⭐⭐⭐ - Excellent</option>
-                <option value="4">⭐⭐⭐⭐ - Very Good</option>
-                <option value="3">⭐⭐⭐ - Good</option>
-                <option value="2">⭐⭐ - Fair</option>
-                <option value="1">⭐ - Poor</option>
-            </select>
+        <div class="star-rating" role="group" aria-label="Rate your experience">
+
+            <input type="radio" id="star5" name="rating" value="5" required>
+            <label for="star5" title="5 stars">★</label>
+
+            <input type="radio" id="star4" name="rating" value="4">
+            <label for="star4" title="4 stars">★</label>
+
+            <input type="radio" id="star3" name="rating" value="3">
+            <label for="star3" title="3 stars">★</label>
+
+            <input type="radio" id="star2" name="rating" value="2">
+            <label for="star2" title="2 stars">★</label>
+
+            <input type="radio" id="star1" name="rating" value="1">
+            <label for="star1" title="1 star">★</label>
+
+        </div>
+
+        <label for="comment">Your comments (optional)</label>
+
+        <textarea
+            id="comment"
+            name="comment"
+            placeholder="Tell us what you think about Toolify..."
+        ></textarea>
+
+        <button type="submit" class="feedback-submit">
+            Submit Feedback
+        </button>
+
+        <div id="feedbackMessage" role="status"></div>
+
+    </form>
+</section>
 
             <label for="comment">Your comments (optional)</label>
 
