@@ -394,12 +394,89 @@
 }
 
 #chatClose {
+    
+/* Chat History and Delete Options */
+
+.chat-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.chat-header-actions button {
     border: none;
-    background: transparent;
+    background: #26395f;
     color: white;
-    font-size: 26px;
+    border-radius: 7px;
+    padding: 7px 9px;
+    font-size: 16px;
     cursor: pointer;
 }
+
+.chat-header-actions button:hover {
+    background: #315de8;
+}
+
+#chatHistoryPanel {
+    height: 390px;
+    padding: 15px;
+    overflow-y: auto;
+    background: #f4f7fc;
+}
+
+#chatHistoryPanel h4 {
+    margin: 0 0 15px;
+    color: #172033;
+}
+
+.history-item {
+    background: white;
+    border: 1px solid #e1e6f0;
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 10px;
+}
+
+.history-item p {
+    margin: 0 0 10px;
+    font-size: 13px;
+    color: #172033;
+    overflow-wrap: anywhere;
+}
+
+.history-item button {
+    border: none;
+    border-radius: 6px;
+    padding: 7px 10px;
+    margin-right: 5px;
+    cursor: pointer;
+    background: #315de8;
+    color: white;
+    font-size: 12px;
+}
+
+.history-item .delete-history {
+    background: #d93025;
+}
+
+#backToChat {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background: #111c3a;
+    color: white;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.history-empty {
+    color: #68758a;
+    text-align: center;
+    padding: 25px 5px;
+    font-size: 14px;
+}
+
 
 #chatMessages {
     height: 270px;
@@ -624,11 +701,26 @@
     </button>
 
     <div id="chatWindow">
-        <div class="chat-header">
-            <div>
-                <strong>🛠️ Toolify Support</strong>
-                <small>FAQ Assistant • Online</small>
-            </div>
+
+<div class="chat-header">
+    <div>
+        <strong>🛠️ Toolify Support</strong>
+        <small>FAQ Assistant • Online</small>
+    </div>
+
+    <div class="chat-header-actions">
+        <button id="chatHistory" title="Previous Chats">🕘</button>
+        <button id="clearChat" title="Clear Current Chat">🗑️</button>
+        <button id="chatClose" aria-label="Close chatbot">×</button>
+    </div>
+</div>
+
+<div id="chatHistoryPanel" style="display:none;">
+    <h4>Previous Chats</h4>
+    <div id="chatHistoryList"></div>
+    <button id="backToChat">← Back to Chat</button>
+</div>
+
             <button id="chatClose" aria-label="Close chatbot">×</button>
         </div>
 
@@ -813,6 +905,9 @@
     });
 
 // Toolify FAQ Chatbot
+
+// Toolify FAQ Chatbot with Chat History
+
 const chatToggle = document.getElementById("chatToggle");
 const chatWindow = document.getElementById("chatWindow");
 const chatClose = document.getElementById("chatClose");
@@ -820,23 +915,97 @@ const chatForm = document.getElementById("chatForm");
 const chatInput = document.getElementById("chatInput");
 const chatMessages = document.getElementById("chatMessages");
 
-chatToggle.addEventListener("click", () => {
-    chatWindow.style.display = "block";
-    chatToggle.style.display = "none";
-});
+const chatHistory = document.getElementById("chatHistory");
+const clearChat = document.getElementById("clearChat");
+const chatHistoryPanel = document.getElementById("chatHistoryPanel");
+const chatHistoryList = document.getElementById("chatHistoryList");
+const backToChat = document.getElementById("backToChat");
 
-chatClose.addEventListener("click", () => {
-    chatWindow.style.display = "none";
-    chatToggle.style.display = "block";
-});
+const STORAGE_KEY = "toolify_chat_history_v1";
 
-function addChatMessage(message, sender) {
+let conversations = [];
+let currentChatId = null;
+
+try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+    conversations = Array.isArray(saved) ? saved : [];
+} catch (error) {
+    conversations = [];
+}
+
+function saveHistory() {
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(conversations));
+    } catch (error) {
+        addChatMessage("Chat save nahi ho payi. Browser storage full ho sakta hai.", "bot");
+    }
+}
+
+function createNewChat() {
+    currentChatId = Date.now().toString();
+
+    conversations.push({
+        id: currentChatId,
+        title: "New Chat",
+        messages: [],
+        date: new Date().toLocaleString()
+    });
+
+    saveHistory();
+    renderMessages();
+}
+
+function getCurrentChat() {
+    return conversations.find(chat => chat.id === currentChatId);
+}
+
+function renderMessages() {
+    chatMessages.innerHTML = "";
+
+    const chat = getCurrentChat();
+
+    if (!chat || chat.messages.length === 0) {
+        addChatMessage(
+            "Hello! Welcome to Toolify Support. Aap kya jaanna chahte hain?",
+            "bot",
+            false
+        );
+        return;
+    }
+
+    chat.messages.forEach(message => {
+        addChatMessage(message.text, message.sender, false);
+    });
+
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+function addChatMessage(message, sender, save = true) {
     const messageDiv = document.createElement("div");
+
     messageDiv.className =
         sender === "user" ? "user-message" : "bot-message";
 
     messageDiv.textContent = message;
     chatMessages.appendChild(messageDiv);
+
+    if (save) {
+        const chat = getCurrentChat();
+
+        if (chat) {
+            chat.messages.push({
+                text: message,
+                sender: sender
+            });
+
+            if (sender === "user" && chat.title === "New Chat") {
+                chat.title = message.substring(0, 35);
+            }
+
+            saveHistory();
+        }
+    }
+
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
@@ -844,11 +1013,11 @@ function getFAQAnswer(question) {
     const q = question.toLowerCase();
 
     if (q.includes("hello") || q.includes("hi") || q.includes("hey")) {
-        return "Hello! Welcome to Toolify Support. Aapko kis tool ya feature mein help chahiye?";
+        return "Hello! Welcome to Toolify Support. Aapko kis tool mein help chahiye?";
     }
 
     if (q.includes("pdf") && (q.includes("jpg") || q.includes("image"))) {
-        return "PDF to JPG tool open karein, apni PDF upload karein aur Convert button par click karein.";
+        return "PDF to JPG tool open karein, PDF upload karein aur Convert button par click karein.";
     }
 
     if (q.includes("convert") || q.includes("conversion")) {
@@ -872,7 +1041,7 @@ function getFAQAnswer(question) {
     }
 
     if (q.includes("profile")) {
-        return "Login karne ke baad Profile section open karein. Wahan available profile options use kar sakte hain.";
+        return "Login karne ke baad Profile section open karein.";
     }
 
     if (q.includes("feedback") || q.includes("review")) {
@@ -884,7 +1053,7 @@ function getFAQAnswer(question) {
     }
 
     if (q.includes("contact") || q.includes("support") || q.includes("help")) {
-        return "Aap apna question yahin type kar sakte hain. Agar answer available nahi hai, toh Toolify ke website owner se contact karein.";
+        return "Aap apna question yahin type kar sakte hain. Agar answer available nahi hai, toh website owner se contact karein.";
     }
 
     if (q.includes("thank")) {
@@ -899,19 +1068,125 @@ function sendChatMessage(question) {
 
     if (!cleanQuestion || cleanQuestion.length > 300) return;
 
+    if (!getCurrentChat()) {
+        createNewChat();
+    }
+
     addChatMessage(cleanQuestion, "user");
 
     const answer = getFAQAnswer(cleanQuestion);
 
     setTimeout(() => {
-        addChatMessage(answer, "bot");
+        if (getCurrentChat()) {
+            addChatMessage(answer, "bot");
+        }
     }, 400);
 }
 
-chatForm.addEventListener("submit", function(event) {
+function showHistory() {
+    chatMessages.style.display = "none";
+    document.querySelector(".chat-questions").style.display = "none";
+    chatForm.style.display = "none";
+
+    chatHistoryPanel.style.display = "block";
+    chatHistoryList.innerHTML = "";
+
+    if (conversations.length === 0) {
+        chatHistoryList.innerHTML =
+            '<div class="history-empty">No previous chats found.</div>';
+    }
+
+    [...conversations].reverse().forEach(chat => {
+        const item = document.createElement("div");
+        item.className = "history-item";
+
+        const title = document.createElement("p");
+        title.textContent = chat.title + " • " + chat.date;
+
+        const openButton = document.createElement("button");
+        openButton.textContent = "Open";
+        openButton.addEventListener("click", () => {
+            currentChatId = chat.id;
+            showChat();
+            renderMessages();
+        });
+
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+        deleteButton.className = "delete-history";
+
+        deleteButton.addEventListener("click", () => {
+            if (!confirm("Delete this conversation permanently?")) return;
+
+            conversations = conversations.filter(c => c.id !== chat.id);
+
+            if (currentChatId === chat.id) {
+                currentChatId = null;
+            }
+
+            saveHistory();
+            showHistory();
+        });
+
+        item.appendChild(title);
+        item.appendChild(openButton);
+        item.appendChild(deleteButton);
+        chatHistoryList.appendChild(item);
+    });
+}
+
+function showChat() {
+    chatHistoryPanel.style.display = "none";
+    chatMessages.style.display = "block";
+    document.querySelector(".chat-questions").style.display = "flex";
+    chatForm.style.display = "flex";
+}
+
+chatToggle.addEventListener("click", () => {
+    chatWindow.style.display = "block";
+    chatToggle.style.display = "none";
+
+    if (!currentChatId || !getCurrentChat()) {
+        createNewChat();
+    }
+});
+
+chatClose.addEventListener("click", () => {
+    chatWindow.style.display = "none";
+    chatToggle.style.display = "block";
+});
+
+chatHistory.addEventListener("click", showHistory);
+
+backToChat.addEventListener("click", () => {
+    showChat();
+
+    if (!getCurrentChat()) {
+        createNewChat();
+    } else {
+        renderMessages();
+    }
+});
+
+clearChat.addEventListener("click", () => {
+    if (!confirm("Clear this current chat?")) return;
+
+    conversations = conversations.filter(
+        chat => chat.id !== currentChatId
+    );
+
+    currentChatId = null;
+    saveHistory();
+    createNewChat();
+});
+
+chatForm.addEventListener("submit", event => {
     event.preventDefault();
 
-    const question = chatInput.value;
+    const question = chatInput.value.trim();
+
+    if (!question || question.length > 300) return;
+
     sendChatMessage(question);
     chatInput.value = "";
 });
@@ -921,6 +1196,7 @@ document.querySelectorAll(".chat-questions button").forEach(button => {
         sendChatMessage(button.dataset.question);
     });
 });
+
     
 </script>
 
