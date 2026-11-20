@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rakshit File Converter</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f6fb;
+            color: #172033;
+        }
+        header {
+            background: #14213d;
+            color: white;
+            padding: 22px;
+            text-align: center;
+        }
+        main {
+            max-width: 1100px;
+            margin: 30px auto;
+            padding: 15px;
+        }
+        .tools {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+        }
+        .tool {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #172033;
+            box-shadow: 0 3px 12px #00000010;
+        }
+        .tool:hover { background: #eaf1ff; }
+        .tool h3 { margin-top: 0; color: #2457d6; }
+        nav { margin-top: 12px; }
+        nav a { color: white; margin: 0 8px; }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Rakshit File Converter</h1>
+    <p>Free Online PDF and Image Tools</p>
+    <nav>
+        <a href="/">Home</a>
+        <a href="/settings">Settings</a>
+        <a href="/profile">Profile</a>
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+    </nav>
+</header>
+
+<main>
+    <h2>All Tools</h2>
+    <div class="tools">
+        {% for tool in tools %}
+        <a class="tool" href="/tools/{{ tool[1] }}">
+            <h3>{{ tool[0] }}</h3>
+            <p>{{ tool[2] }}</p>
+        </a>
+        {% endfor %}
+    </div>
+</main>
+</body>
+</html>
