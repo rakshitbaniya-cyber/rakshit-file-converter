@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Rakshit File Converter - Free Online Tools</title>
-
-    <meta name="description" content="Use free online PDF and image tools with Rakshit File Converter.">
+    <title>Toolify - Free Online Tools</title>
+    <meta name="description" content="Toolify provides free online PDF, image and file conversion tools. Convert, create and simplify your work.">
+    <meta name="theme-color" content="#111c3a">
 
     <style>
         * {
@@ -17,149 +17,328 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background: #f3f6fb;
+            background: #f4f7fc;
             color: #172033;
         }
 
         header {
-            background: #14213d;
+            background: #111c3a;
             color: white;
-            padding: 22px;
-            text-align: center;
+            padding: 18px 5%;
         }
 
-        header h1 {
+        .header-inner {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+        }
+
+        .brand-icon {
+            width: 43px;
+            height: 43px;
+            border-radius: 12px;
+            background: #315de8;
+            display: grid;
+            place-items: center;
+            font-size: 24px;
+        }
+
+        .brand h1 {
             margin: 0;
+            font-size: 26px;
+        }
+
+        .brand p {
+            margin: 4px 0 0;
+            color: #cbd5e8;
+            font-size: 12px;
         }
 
         nav {
-            margin-top: 16px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
         nav a {
             color: white;
-            margin: 6px 10px;
             text-decoration: none;
-            display: inline-block;
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 14px;
         }
 
         nav a:hover {
-            text-decoration: underline;
+            background: #26395f;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #172b55, #315de8);
+            color: white;
+            text-align: center;
+            padding: 65px 20px 75px;
+        }
+
+        .hero h2 {
+            font-size: 38px;
+            margin: 0 0 15px;
+        }
+
+        .hero p {
+            color: #e0e8ff;
+            font-size: 17px;
+            line-height: 1.6;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            background: #ffffff20;
+            border: 1px solid #ffffff40;
+            padding: 8px 15px;
+            border-radius: 30px;
+            margin-bottom: 20px;
+            font-size: 13px;
         }
 
         main {
-            max-width: 1100px;
-            margin: 30px auto;
-            padding: 15px;
+            max-width: 1200px;
+            margin: 35px auto;
+            padding: 0 18px;
         }
 
-        .welcome {
+        .section-heading {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
+        }
+
+        .section-heading h2 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .section-heading p {
+            color: #68758a;
         }
 
         .search-box {
             max-width: 650px;
-            margin: 22px auto;
+            margin: 25px auto;
         }
 
         #toolSearch {
             width: 100%;
             padding: 16px;
-            border: 1px solid #ccd3df;
-            border-radius: 10px;
+            border: 1px solid #d5dce8;
+            border-radius: 12px;
             font-size: 16px;
             outline: none;
+            background: white;
         }
 
         #toolSearch:focus {
-            border-color: #2457d6;
-            box-shadow: 0 0 0 3px #2457d620;
+            border-color: #315de8;
+            box-shadow: 0 0 0 3px #315de820;
         }
 
         .category {
-            text-align: center;
-            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 9px;
+            margin: 25px 0;
         }
 
         .category button {
-            padding: 10px 16px;
-            margin: 5px;
-            border: 0;
-            border-radius: 20px;
+            padding: 11px 18px;
+            border: 1px solid #dce2ed;
+            border-radius: 25px;
             background: white;
-            color: #2457d6;
+            color: #315de8;
             cursor: pointer;
+            font-size: 14px;
         }
 
         .category button.active,
         .category button:hover {
-            background: #2457d6;
+            background: #315de8;
             color: white;
+            border-color: #315de8;
         }
 
         .tools {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 16px;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 19px;
         }
 
         .tool {
+            display: block;
             background: white;
-            padding: 22px;
-            border-radius: 12px;
+            padding: 23px;
+            border: 1px solid #e7ebf2;
+            border-radius: 15px;
             text-decoration: none;
             color: #172033;
-            box-shadow: 0 3px 12px #00000010;
+            box-shadow: 0 4px 15px #00000008;
             transition: 0.2s;
         }
 
         .tool:hover {
-            background: #eaf1ff;
-            transform: translateY(-3px);
+            transform: translateY(-5px);
+            border-color: #315de8;
+            box-shadow: 0 9px 25px #315de81a;
+        }
+
+        .tool-icon {
+            width: 53px;
+            height: 53px;
+            border-radius: 13px;
+            background: #edf2ff;
+            display: grid;
+            place-items: center;
+            font-size: 27px;
+            margin-bottom: 17px;
         }
 
         .tool h3 {
-            margin-top: 0;
-            color: #2457d6;
+            color: #244bc2;
+            margin: 0 0 10px;
+            font-size: 18px;
         }
 
         .tool p {
-            line-height: 1.5;
-            color: #596579;
+            color: #68758a;
+            line-height: 1.6;
+            font-size: 14px;
+            margin: 0;
         }
 
         .no-results {
             display: none;
             text-align: center;
+            padding: 35px;
+            background: white;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+
+        .feedback-section {
+            max-width: 700px;
+            margin: 65px auto 40px;
             padding: 30px;
             background: white;
-            border-radius: 10px;
+            border: 1px solid #e7ebf2;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px #00000008;
+        }
+
+        .feedback-section h2 {
+            text-align: center;
+            margin-top: 0;
+        }
+
+        .feedback-section > p {
+            text-align: center;
+            color: #68758a;
+            line-height: 1.5;
+        }
+
+        .feedback-section label {
+            display: block;
+            margin: 18px 0 8px;
+            font-weight: bold;
+        }
+
+        .feedback-section select,
+        .feedback-section textarea {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #d5dce8;
+            border-radius: 9px;
+            font: inherit;
+        }
+
+        .feedback-section textarea {
+            min-height: 110px;
+            resize: vertical;
+        }
+
+        .feedback-submit {
+            width: 100%;
+            padding: 14px;
+            margin-top: 18px;
+            border: none;
+            border-radius: 9px;
+            background: #315de8;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .feedback-submit:hover {
+            background: #244bc2;
+        }
+
+        #feedbackMessage {
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
         }
 
         footer {
-            margin-top: 45px;
-            padding: 22px;
+            margin-top: 50px;
+            padding: 30px 15px;
             text-align: center;
-            background: #14213d;
+            background: #111c3a;
             color: white;
+        }
+
+        footer p {
+            color: #cbd5e8;
+            line-height: 1.6;
         }
 
         footer a {
             color: white;
+            text-decoration: none;
+            margin: 0 8px;
         }
 
-        @media (max-width: 500px) {
-            header {
-                padding: 18px 10px;
+        @media (max-width: 650px) {
+            .header-inner {
+                justify-content: center;
+                text-align: center;
             }
 
-            nav a {
-                margin: 7px;
+            nav {
+                justify-content: center;
+            }
+
+            .hero {
+                padding: 45px 15px;
+            }
+
+            .hero h2 {
+                font-size: 29px;
             }
 
             .tools {
                 grid-template-columns: 1fr;
+            }
+
+            .feedback-section {
+                padding: 22px;
             }
         }
     </style>
@@ -168,28 +347,49 @@
 <body>
 
 <header>
-    <h1>Rakshit File Converter</h1>
-    <p>Free Online PDF and Image Tools</p>
+    <div class="header-inner">
 
-    <nav>
-        <a href="/">Home</a>
-        <a href="/settings">Settings</a>
-        <a href="/profile">Profile</a>
+        <div class="brand">
+            <div class="brand-icon">🛠️</div>
+            <div>
+                <h1>Toolify</h1>
+                <p>Convert • Create • Simplify</p>
+            </div>
+        </div>
 
-        {% if current_user %}
-            <a href="/logout">Logout</a>
-        {% else %}
-            <a href="/login">Login</a>
-            <a href="/register">Register</a>
-        {% endif %}
-    </nav>
+        <nav>
+            <a href="/">Home</a>
+
+            {% if current_user %}
+                <a href="/settings">Settings</a>
+                <a href="/profile">Profile</a>
+                <a href="/logout">Logout</a>
+            {% else %}
+                <a href="/login">Login</a>
+                <a href="/register">Register</a>
+            {% endif %}
+        </nav>
+
+    </div>
 </header>
+
+<section class="hero">
+    <div class="hero-tag">✨ Your All-in-One Online Tools Platform</div>
+
+    <h2>Welcome to Toolify</h2>
+
+    <p>
+        Convert files, work with PDFs and images, and simplify your daily tasks.
+        <br>
+        Everything you need in one place.
+    </p>
+</section>
 
 <main>
 
-    <section class="welcome">
-        <h2>All Online Tools</h2>
-        <p>Choose a tool or search for the tool you need.</p>
+    <section class="section-heading">
+        <h2>Explore Our Tools</h2>
+        <p>Choose a tool or search for the service you need.</p>
 
         <div class="search-box">
             <input
@@ -217,8 +417,9 @@
             href="/tools/{{ tool[1] }}"
             data-name="{{ tool[0]|lower }}"
             data-description="{{ tool[2]|lower }}"
-            data-slug="{{ tool[1] }}"
+            data-slug="{{ tool[1]|lower }}"
         >
+            <div class="tool-icon">🛠️</div>
             <h3>{{ tool[0] }}</h3>
             <p>{{ tool[2] }}</p>
         </a>
@@ -232,11 +433,53 @@
         <p>Try another search keyword.</p>
     </div>
 
+    <section class="feedback-section">
+        <h2>Share Your Feedback</h2>
+        <p>Your feedback helps us improve Toolify.</p>
+
+        <form id="feedbackForm">
+
+            <label for="rating">Rate your experience *</label>
+
+            <select id="rating" name="rating" required>
+                <option value="">Select your rating</option>
+                <option value="5">⭐⭐⭐⭐⭐ - Excellent</option>
+                <option value="4">⭐⭐⭐⭐ - Very Good</option>
+                <option value="3">⭐⭐⭐ - Good</option>
+                <option value="2">⭐⭐ - Fair</option>
+                <option value="1">⭐ - Poor</option>
+            </select>
+
+            <label for="comment">Your comments (optional)</label>
+
+            <textarea
+                id="comment"
+                name="comment"
+                placeholder="Tell us what you think about Toolify..."
+            ></textarea>
+
+            <button type="submit" class="feedback-submit">
+                Submit Feedback
+            </button>
+
+            <div id="feedbackMessage" role="status"></div>
+
+        </form>
+    </section>
+
 </main>
 
 <footer>
-    <p>© 2026 Rakshit File Converter</p>
-    <p>Free Online File Conversion Tools</p>
+    <h2>Toolify</h2>
+    <p>Convert • Create • Simplify</p>
+    <p>Free Online PDF, Image and File Tools</p>
+
+    <p>
+        <a href="/">Home</a>
+        <a href="/contact">Contact</a>
+    </p>
+
+    <p>© 2026 Toolify. All rights reserved.</p>
 </footer>
 
 <script>
@@ -261,20 +504,26 @@
                 description.includes(search) ||
                 slug.includes(search);
 
+            const isPdf =
+                slug.includes("pdf") ||
+                slug.includes("word-to-pdf") ||
+                slug.includes("excel-to-pdf");
+
+            const isImage =
+                slug.includes("image") ||
+                slug.includes("jpg") ||
+                slug.includes("png") ||
+                slug.includes("background") ||
+                slug.includes("watermark");
+
             let categoryMatch = true;
 
             if (selectedCategory === "pdf") {
-                categoryMatch = slug.includes("pdf") ||
-                    slug.includes("word-to-pdf") ||
-                    slug.includes("excel-to-pdf") ||
-                    slug.includes("powerpoint-to-pdf");
+                categoryMatch = isPdf;
             } else if (selectedCategory === "image") {
-                categoryMatch = slug.includes("image") ||
-                    slug.includes("jpg");
+                categoryMatch = isImage;
             } else if (selectedCategory === "other") {
-                categoryMatch = !slug.includes("pdf") &&
-                    !slug.includes("image") &&
-                    !slug.includes("jpg");
+                categoryMatch = !isPdf && !isImage;
             }
 
             if (searchMatch && categoryMatch) {
@@ -302,6 +551,76 @@
 
             filterTools();
         });
+    });
+
+    // Tool icons
+    toolCards.forEach(card => {
+        const slug = card.dataset.slug;
+        const icon = card.querySelector(".tool-icon");
+
+        if (slug.includes("merge")) {
+            icon.textContent = "📑";
+        } else if (slug.includes("split")) {
+            icon.textContent = "✂️";
+        } else if (slug.includes("compress")) {
+            icon.textContent = "📦";
+        } else if (slug.includes("image") || slug.includes("jpg") || slug.includes("png")) {
+            icon.textContent = "🖼️";
+        } else if (slug.includes("background")) {
+            icon.textContent = "🎨";
+        } else if (slug.includes("watermark")) {
+            icon.textContent = "💧";
+        } else if (slug.includes("protect") || slug.includes("password")) {
+            icon.textContent = "🔒";
+        } else if (slug.includes("rotate")) {
+            icon.textContent = "🔄";
+        } else if (slug.includes("word")) {
+            icon.textContent = "📝";
+        } else if (slug.includes("excel")) {
+            icon.textContent = "📊";
+        } else if (slug.includes("powerpoint")) {
+            icon.textContent = "📽️";
+        }
+    });
+
+    // Feedback form
+    const feedbackForm = document.getElementById("feedbackForm");
+    const feedbackMessage = document.getElementById("feedbackMessage");
+
+    feedbackForm.addEventListener("submit", async function(event) {
+        event.preventDefault();
+
+        const submitButton = feedbackForm.querySelector("button[type='submit']");
+        submitButton.disabled = true;
+        submitButton.textContent = "Submitting...";
+        feedbackMessage.textContent = "";
+
+        try {
+            const response = await fetch("/feedback", {
+                method: "POST",
+                body: new URLSearchParams(new FormData(feedbackForm))
+            });
+
+            const data = await response.json();
+
+            if (!response.ok || data.success === false) {
+                throw new Error(data.message || "Feedback could not be submitted.");
+            }
+
+            feedbackMessage.style.color = "green";
+            feedbackMessage.textContent =
+                data.message || "Thank you! Your feedback has been submitted.";
+
+            feedbackForm.reset();
+
+        } catch (error) {
+            feedbackMessage.style.color = "#c62828";
+            feedbackMessage.textContent =
+                error.message || "Something went wrong. Please try again.";
+        } finally {
+            submitButton.disabled = false;
+            submitButton.textContent = "Submit Feedback";
+        }
     });
 </script>
 
