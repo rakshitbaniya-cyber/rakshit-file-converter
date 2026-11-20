@@ -1,6 +1,13 @@
+
 Flask
+gunicorn
 waitress
 PyMuPDF
 Pillow
 openpyxl
-gunicorn
+Authlib
+python-docx
+python-pptx
+Flask-WTF
+Flask-Limiter
+pytesseract
