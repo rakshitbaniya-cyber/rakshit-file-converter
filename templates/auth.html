@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ mode }} - Rakshit File Converter</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f3f6fb;
+            color: #172033;
+        }
+        header {
+            background: #14213d;
+            color: white;
+            padding: 22px;
+            text-align: center;
+        }
+        main {
+            max-width: 420px;
+            margin: 45px auto;
+            padding: 28px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px #00000010;
+        }
+        input, button {
+            width: 100%;
+            padding: 13px;
+            margin-top: 12px;
+            border-radius: 6px;
+        }
+        input { border: 1px solid #ccc; }
+        button {
+            background: #2457d6;
+            color: white;
+            border: 0;
+            cursor: pointer;
+        }
+        a { color: #2457d6; }
+        .message { color: #c0392b; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Rakshit File Converter</h1>
+</header>
+
+<main>
+    <h2>{{ mode }}</h2>
+
+    {% with messages = get_flashed_messages() %}
+        {% for message in messages %}
+            <p class="message">{{ message }}</p>
+        {% endfor %}
+    {% endwith %}
+
+    <form method="POST">
+        <label>Email Address</label>
+        <input
+            type="email"
+            name="email"
+            placeholder="Enter your email"
+            autocomplete="email"
+            required
+        >
+
+        <label>Password</label>
+        <input
+            type="password"
+            name="password"
+            placeholder="Enter your password"
+            autocomplete="{% if mode == 'Register' %}new-password{% else %}current-password{% endif %}"
+            {% if mode == 'Register' %}minlength="10"{% endif %}
+            required
+        >
+
+        <button type="submit">{{ mode }}</button>
+    </form>
+
+    {% if mode == "Register" %}
+        <p>Already have an account? <a href="/login">Sign in</a></p>
+    {% else %}
+        <p>New user? <a href="/register">Create an account</a></p>
+    {% endif %}
+
+    <p><a href="/">← Back to Home</a></p>
+</main>
+
+</body>
+</html>
