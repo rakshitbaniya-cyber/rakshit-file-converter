@@ -747,16 +747,17 @@
     </div>
 
     
-<section class="feedback-section">
+
+<!-- Feedback Section -->
+<section class="feedback-section" id="feedback">
     <h2>Share Your Feedback</h2>
-    <p>Your feedback helps us improve Toolify.</p>
+    <p>Tell us what you think about Toolify. Your feedback helps us improve.</p>
 
     <form id="feedbackForm">
 
         <label class="rating-heading">Rate your experience *</label>
 
         <div class="star-rating" role="group" aria-label="Rate your experience">
-
             <input type="radio" id="star5" name="rating" value="5" required>
             <label for="star5" title="5 stars">★</label>
 
@@ -771,16 +772,20 @@
 
             <input type="radio" id="star1" name="rating" value="1">
             <label for="star1" title="1 star">★</label>
-
         </div>
 
-        <label for="comment">Your comments (optional)</label>
+        <label for="feedbackComment">Your Comments (Optional)</label>
+        <textarea
+            id="feedbackComment"
+            name="comment"
+            placeholder="Tell us what you think..."
+        ></textarea>
 
         <button type="submit" class="feedback-submit">
             Submit Feedback
         </button>
 
-        <div id="feedbackMessage" role="status"></div>
+        <p id="feedbackMessage"></p>
 
     </form>
 </section>
