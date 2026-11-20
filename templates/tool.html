@@ -1,23 +1,216 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ tool[0] }} - Rakshit File Converter</title>
+
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            background: #f3f6fb;
+            background: #f5f6f8;
             color: #172033;
         }
-        header {
+
+        [hidden] {
+            display: none !important;
+        }
+
+        /* Background remover editor */
+
+        .editor-header {
+            height: 80px;
+            padding: 12px 3%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #e5e7eb;
+            gap: 12px;
+        }
+
+        .brand {
+            font-size: 17px;
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .toolbar {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 7px;
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 40px;
+            overflow-x: auto;
+        }
+
+        .toolbar button {
+            border: 0;
+            background: transparent;
+            color: #536071;
+            padding: 12px 14px;
+            border-radius: 25px;
+            white-space: nowrap;
+            font-size: 14px;
+        }
+
+        .toolbar .active {
+            background: #eaf1ff;
+            color: #2457d6;
+            font-weight: bold;
+        }
+
+        .toolbar button:disabled {
+            opacity: .55;
+            cursor: not-allowed;
+        }
+
+        .download-button {
+            background: #1473e6;
+            color: white;
+            border: 0;
+            padding: 13px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .workspace {
+            min-height: calc(100vh - 80px);
+            padding: 35px 15px 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 22px;
+        }
+
+        .canvas-stage {
+            width: min(100%, 480px);
+            height: min(58vh, 560px);
+            min-height: 350px;
+            position: relative;
+            border: 1px solid #e2e5e9;
+            border-radius: 18px;
+            overflow: hidden;
+
+            /* Transparent checkerboard preview area */
+            background-color: white;
+            background-image:
+                linear-gradient(45deg, #e8eaed 25%, transparent 25%),
+                linear-gradient(-45deg, #e8eaed 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, #e8eaed 75%),
+                linear-gradient(-45deg, transparent 75%, #e8eaed 75%);
+            background-size: 24px 24px;
+            background-position:
+                0 0, 0 12px, 12px -12px, -12px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 25px;
+            color: #667085;
+        }
+
+        .upload-icon {
+            width: 65px;
+            height: 65px;
+            border-radius: 18px;
+            background: white;
+            border: 1px solid #e2e5e9;
+            display: grid;
+            place-items: center;
+            font-size: 35px;
+            margin: 0 auto 15px;
+        }
+
+        .empty-state button {
+            padding: 12px 22px;
+            background: #1473e6;
+            color: white;
+            border: 0;
+            border-radius: 25px;
+            cursor: pointer;
+        }
+
+        .preview-image {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            padding: 12px;
+            display: block;
+        }
+
+        .image-strip {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            min-height: 60px;
+        }
+
+        .add-image {
+            height: 58px;
+            width: 58px;
+            background: #eceef1;
+            border: 0;
+            border-radius: 15px;
+            font-size: 28px;
+            cursor: pointer;
+            color: #515761;
+        }
+
+        .thumbnail {
+            width: 58px;
+            height: 58px;
+            object-fit: cover;
+            border: 2px solid #1473e6;
+            border-radius: 13px;
+            padding: 2px;
+        }
+
+        .editor-note {
+            text-align: center;
+            max-width: 520px;
+            line-height: 1.6;
+            color: #697386;
+            font-size: 13px;
+        }
+
+        .engine-status {
+            color: #a05b00;
+            background: #fff5df;
+            padding: 12px 16px;
+            border-radius: 9px;
+            max-width: 520px;
+            text-align: center;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        /* Other tool pages */
+
+        .normal-header {
             background: #14213d;
             color: white;
             padding: 22px;
             text-align: center;
         }
-        main {
+
+        .normal-main {
             max-width: 650px;
             margin: 40px auto;
             padding: 25px;
@@ -25,38 +218,217 @@
             border-radius: 12px;
             box-shadow: 0 3px 12px #00000010;
         }
-        input, button {
+
+        .normal-main input,
+        .normal-main button {
+            width: 100%;
             padding: 12px;
             margin-top: 15px;
-            width: 100%;
         }
-        button {
+
+        .normal-main button {
             background: #2457d6;
             color: white;
             border: 0;
             border-radius: 6px;
             cursor: pointer;
         }
-        a { color: #2457d6; }
+
+        @media (max-width: 700px) {
+            .editor-header {
+                height: auto;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .brand {
+                width: 100%;
+                text-align: center;
+            }
+
+            .toolbar {
+                max-width: 100%;
+            }
+
+            .toolbar button {
+                padding: 10px;
+                font-size: 12px;
+            }
+
+            .download-button {
+                padding: 11px 16px;
+            }
+
+            .workspace {
+                padding-top: 25px;
+            }
+        }
     </style>
 </head>
+
 <body>
-<header>
-    <h1>Rakshit File Converter</h1>
-</header>
 
-<main>
-    <h2>{{ tool[0] }}</h2>
-    <p>{{ tool[2] }}</p>
+{% if tool[1] == "background-remover" %}
 
-    <form action="/convert/{{ tool[1] }}" method="POST"
-          enctype="multipart/form-data">
-        <label>Select your file:</label>
-        <input type="file" name="file" required>
-        <button type="submit">Convert File</button>
-    </form>
+    <header class="editor-header">
+        <div class="brand">Rakshit File Converter</div>
 
-    <p><a href="/">← Back to Home</a></p>
-</main>
+        <nav class="toolbar">
+            <button class="active" type="button">✦ Cutout</button>
+            <button type="button" disabled title="Coming soon">▧ Background</button>
+            <button type="button" disabled title="Coming soon">◉ Effects</button>
+            <button type="button" disabled title="Coming soon">▤ Adjust</button>
+            <button type="button" disabled title="Coming soon">◫ Design</button>
+        </nav>
+
+        <button class="download-button" id="downloadButton" disabled>
+            Download
+        </button>
+    </header>
+
+    <main class="workspace">
+
+        <input
+            type="file"
+            id="imageInput"
+            accept="image/png,image/jpeg,image/webp"
+            hidden
+        >
+
+        <div class="canvas-stage">
+
+            <div class="empty-state" id="emptyState">
+                <div class="upload-icon">＋</div>
+                <h3>Upload your image</h3>
+                <p>Your image preview will appear here.</p>
+                <button type="button" id="chooseImage">
+                    Choose Image
+                </button>
+            </div>
+
+            <!-- Only the visitor's uploaded image appears here -->
+            <img
+                id="previewImage"
+                class="preview-image"
+                alt="Your uploaded image preview"
+                hidden
+            >
+
+        </div>
+
+        <div class="image-strip">
+            <button
+                class="add-image"
+                type="button"
+                id="addImage"
+                aria-label="Add image"
+            >+</button>
+
+            <img
+                id="thumbnail"
+                class="thumbnail"
+                alt="Uploaded image thumbnail"
+                hidden
+            >
+        </div>
+
+        <div class="engine-status">
+            Image preview is ready. The actual AI background-removal
+            engine has not been connected yet.
+        </div>
+
+        <p class="editor-note">
+            Your selected image is previewed in your browser.
+            No sample image is loaded automatically.
+        </p>
+
+        <p><a href="/">← Back to Home</a></p>
+
+    </main>
+
+    <script>
+        const imageInput = document.getElementById("imageInput");
+        const previewImage = document.getElementById("previewImage");
+        const thumbnail = document.getElementById("thumbnail");
+        const emptyState = document.getElementById("emptyState");
+        const chooseImage = document.getElementById("chooseImage");
+        const addImage = document.getElementById("addImage");
+        const downloadButton = document.getElementById("downloadButton");
+
+        let selectedFile = null;
+        let imageURL = null;
+
+        function openImagePicker() {
+            imageInput.click();
+        }
+
+        chooseImage.addEventListener("click", openImagePicker);
+        addImage.addEventListener("click", openImagePicker);
+
+        imageInput.addEventListener("change", function () {
+            const file = imageInput.files && imageInput.files[0];
+
+            if (!file) return;
+
+            if (!file.type.startsWith("image/")) {
+                alert("Please choose a valid image file.");
+                imageInput.value = "";
+                return;
+            }
+
+            if (imageURL) {
+                URL.revokeObjectURL(imageURL);
+            }
+
+            selectedFile = file;
+            imageURL = URL.createObjectURL(file);
+
+            previewImage.src = imageURL;
+            thumbnail.src = imageURL;
+
+            previewImage.hidden = false;
+            thumbnail.hidden = false;
+            emptyState.hidden = true;
+
+            downloadButton.disabled = false;
+        });
+
+        downloadButton.addEventListener("click", function () {
+            if (!selectedFile || !imageURL) return;
+
+            const link = document.createElement("a");
+            link.href = imageURL;
+            link.download = selectedFile.name;
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+        });
+    </script>
+
+{% else %}
+
+    <header class="normal-header">
+        <h1>Rakshit File Converter</h1>
+    </header>
+
+    <main class="normal-main">
+        <h2>{{ tool[0] }}</h2>
+        <p>{{ tool[2] }}</p>
+
+        <form
+            action="/convert/{{ tool[1] }}"
+            method="POST"
+            enctype="multipart/form-data"
+        >
+            <label>Select your file:</label>
+            <input type="file" name="file" required>
+            <button type="submit">Convert File</button>
+        </form>
+
+        <p><a href="/">← Back to Home</a></p>
+    </main>
+
+{% endif %}
+
 </body>
 </html>
