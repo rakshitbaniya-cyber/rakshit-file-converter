@@ -119,19 +119,18 @@ def init_db():
             row["name"]
             for row in con.execute("PRAGMA table_info(users)").fetchall()
         }
-
         migrations = {
             "profile_photo": "ALTER TABLE users ADD COLUMN profile_photo TEXT",
             "avatar": "ALTER TABLE users ADD COLUMN avatar TEXT",
-            "caption": "ALTER TABLE users ADD COLUMN caption TEXT"
+            "caption": "ALTER TABLE users ADD COLUMN caption TEXT",
             "role": "ALTER TABLE users ADD COLUMN role TEXT NOT NULL DEFAULT 'user'",
             "premium_plan": "ALTER TABLE users ADD COLUMN premium_plan TEXT DEFAULT 'free'",
             "premium_expiry": "ALTER TABLE users ADD COLUMN premium_expiry TIMESTAMP"
         }
+
         for column, sql in migrations.items():
             if column not in existing:
                 con.execute(sql)
-
         # Create feedback table.
         con.execute("""
             CREATE TABLE IF NOT EXISTS feedback (
