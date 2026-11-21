@@ -103,7 +103,6 @@ def db():
     con.row_factory = sqlite3.Row
     return con
 
-
 def init_db():
     with db() as con:
         con.execute("""
@@ -131,17 +130,7 @@ def init_db():
             if column not in existing:
                 con.execute(sql)
 
-        con.execute("""
-            CREATE TABLE IF NOT EXISTS feedback
-            
-        # Add approval status to existing feedback databases safely.
-        existing_feedback_columns = {
-            row["name"]
-            for row in con.execute("PRAGMA table_info(feedback)").fetchall()
-        }
-
-        if "status" not in existing_feedback_columns:
-
+        # Create feedback table.
         con.execute("""
             CREATE TABLE IF NOT EXISTS feedback (
                 id INTEGER PRIMARY KEY,
@@ -153,7 +142,7 @@ def init_db():
             )
         """)
 
-        # Add approval status to existing feedback databases safely.
+        # Add approval status safely.
         existing_feedback_columns = {
             row["name"]
             for row in con.execute("PRAGMA table_info(feedback)").fetchall()
@@ -164,12 +153,7 @@ def init_db():
                 ALTER TABLE feedback
                 ADD COLUMN status TEXT NOT NULL DEFAULT 'pending'
             """)
-            
-
-
 init_db()
-
-
 # ---------------- HELPERS ----------------
 
 def login_required(fn):
