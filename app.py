@@ -132,7 +132,20 @@ def init_db():
                 con.execute(sql)
 
         con.execute("""
-            CREATE TABLE IF NOT EXISTS feedback(
+            CREATE TABLE IF NOT EXISTS feedback
+            
+        # Add approval status to existing feedback databases safely.
+        existing_feedback_columns = {
+            row["name"]
+            for row in con.execute("PRAGMA table_info(feedback)").fetchall()
+        }
+
+        if "status" not in existing_feedback_columns:
+            con.execute("""
+                ALTER TABLE feedback
+                ADD COLUMN status TEXT NOT NULL DEFAULT 'pending'
+            """)
+(
                 id INTEGER PRIMARY KEY,
                 user_id INTEGER,
                 rating INTEGER NOT NULL,
@@ -418,6 +431,9 @@ def uploaded_profile_photo(filename):
 
 @app.route("/feedback", methods=["POST"])
 def submit_feedback():
+
+@app.route("/feedback", methods=["POST"])
+def submit_feedback():
     rating_value = request.form.get("rating", "").strip()
     comment = request.form.get("comment", "").strip()
 
@@ -436,13 +452,13 @@ def submit_feedback():
 
     with db() as con:
         con.execute("""
-            INSERT INTO feedback(user_id, rating, comment)
-            VALUES(?, ?, ?)
+            INSERT INTO feedback(user_id, rating, comment, status)
+            VALUES(?, ?, ?, 'pending')
         """, (user_id, rating, comment or None))
 
     return jsonify(
         success=True,
-        message="Thank you! Your feedback has been submitted."
+        message="Thank you! Your feedback has been submitted and is awaiting admin approval."
     )
 
 
