@@ -484,19 +484,6 @@ def admin_feedback():
         "admin_feedback.html",
         feedback=feedback_rows
     )
-    with db() as con:
-        feedback_rows = con.execute("""
-            SELECT feedback.id, feedback.rating, feedback.comment,
-                   feedback.created_at, feedback.status, users.email
-            FROM feedback
-            LEFT JOIN users ON feedback.user_id = users.id
-            ORDER BY feedback.created_at DESC
-        """).fetchall()
-
-    return render_template(
-        "admin_feedback.html",
-        feedback=feedback_rows
-    )
 
 # Approve feedback
 @app.route("/admin/feedback/<int:feedback_id>/approve", methods=["POST"])
