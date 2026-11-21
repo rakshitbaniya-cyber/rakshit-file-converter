@@ -1023,16 +1023,88 @@
         </form>
     </div>
 </div>
-<section id="premium">
-    <!-- Existing Premium Plans -->
+
+<!-- Toolify Premium Membership -->
+<section id="premium" style="padding:50px 20px; text-align:center;">
+    <h2>Toolify Premium</h2>
+    <p>Choose your plan and enjoy Premium features.</p>
+
+    <div class="premium-plans">
+
+        <div class="premium-card">
+            <h3>Monthly</h3>
+            <h2>₹99</h2>
+            <p>1 Month Access</p>
+            <img src="{{ url_for('static', filename='qr/99.jpg') }}" alt="Monthly payment QR">
+        </div>
+
+        <div class="premium-card">
+            <h3>3 Months</h3>
+            <h2>₹199</h2>
+            <p>3 Months Access</p>
+            <img src="{{ url_for('static', filename='qr/199.jpg') }}" alt="3 month payment QR">
+        </div>
+
+        <div class="premium-card">
+            <h3>Yearly</h3>
+            <h2>₹599</h2>
+            <p>12 Months Access</p>
+            <img src="{{ url_for('static', filename='qr/599.jpg') }}" alt="Yearly payment QR">
+        </div>
+
+    </div>
+
+    <div class="tip-card">
+        <h3>❤️ Support Toolify</h3>
+        <p>Give an optional tip of your choice.</p>
+
+        <input type="number" id="tipAmount"
+               min="1" step="1"
+               placeholder="Enter tip amount (₹)">
+
+        <div>
+            <img src="{{ url_for('static', filename='qr/custom.jpg') }}"
+                 alt="Custom tip payment QR">
+        </div>
+
+        <small>Tips are non-refundable, except where required by applicable law or payment rules.</small>
+    </div>
+
+    <p>Premium refund requests: within 7 days, subject to the disclosed refund terms and applicable rules.</p>
+    <p>Demo payment display only. Payment verification and membership activation are not yet enabled.</p>
 </section>
 
-<!-- NEW: QR Payment Section -->
-<!-- Yahan QR code wala code add hoga -->
+<style>
+.premium-plans {
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:20px;
+}
+.premium-card, .tip-card {
+    background:var(--card-bg, #fff);
+    color:var(--text-color, #222);
+    border:1px solid #ddd;
+    border-radius:14px;
+    padding:20px;
+    width:230px;
+    margin:10px;
+}
+.premium-card img, .tip-card img {
+    width:180px;
+    max-width:100%;
+    height:auto;
+    margin-top:12px;
+}
+.tip-card input {
+    width:90%;
+    padding:10px;
+    margin:12px 0;
+    border:1px solid #ccc;
+    border-radius:8px;
+}
+</style>
 
-<footer>
-    <!-- Existing Footer -->
-</footer>
 <footer>
     <h2>Toolify</h2>
     <p>Convert • Create • Simplify</p>
