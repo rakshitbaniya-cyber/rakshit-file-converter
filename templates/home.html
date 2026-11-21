@@ -14,6 +14,11 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 20px;
+        }
+
         body {
             margin: 0;
             font-family: Arial, sans-serif;
@@ -21,14 +26,22 @@
             color: #172033;
         }
 
+        button, input, textarea {
+            font: inherit;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
         header {
             background: #111c3a;
             color: white;
-            padding: 18px 5%;
+            padding: 16px 5%;
         }
 
         .header-inner {
-            max-width: 1200px;
+            max-width: 1250px;
             margin: auto;
             display: flex;
             align-items: center;
@@ -64,23 +77,33 @@
             font-size: 12px;
         }
 
-        nav {
+        .main-nav {
             display: flex;
             align-items: center;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 6px;
         }
 
-        nav a {
+        .main-nav a {
             color: white;
             text-decoration: none;
-            padding: 10px 12px;
+            padding: 10px 11px;
             border-radius: 8px;
-            font-size: 14px;
+            font-size: 13px;
+            transition: 0.2s;
         }
 
-        nav a:hover {
+        .main-nav a:hover {
             background: #26395f;
+        }
+
+        .main-nav .premium-nav {
+            background: #315de8;
+        }
+
+        .main-nav .tip-nav {
+            background: #26395f;
+            border: 1px solid #52658e;
         }
 
         .hero {
@@ -165,7 +188,6 @@
             border-radius: 25px;
             background: white;
             color: #315de8;
-            cursor: pointer;
             font-size: 14px;
         }
 
@@ -233,124 +255,626 @@
             margin-top: 20px;
         }
 
+        /* Public Reviews */
 
-/* Feedback Section */
+        .public-reviews,
+        .feedback-section {
+            max-width: 850px;
+            margin: 60px auto;
+            padding: 30px;
+            background: white;
+            border: 1px solid #e7ebf2;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px #00000008;
+        }
 
-.feedback-section {
-    max-width: 750px;
-    margin: 65px auto 40px;
-    padding: 30px;
-    background: white;
-    border: 1px solid #e7ebf2;
-    border-radius: 16px;
-    box-shadow: 0 4px 15px #00000008;
-}
+        .public-reviews h2,
+        .feedback-section h2 {
+            text-align: center;
+            margin-top: 0;
+            color: #315de8;
+        }
 
-.feedback-section h2 {
-    text-align: center;
-    margin-top: 0;
-    font-size: 28px;
-}
+        .public-reviews > p,
+        .feedback-section > p {
+            text-align: center;
+            color: #68758a;
+            line-height: 1.5;
+        }
 
-.feedback-section > p {
-    text-align: center;
-    color: #68758a;
-    line-height: 1.5;
-}
+        .review-card {
+            background: #f8faff;
+            border: 1px solid #e7ebf2;
+            border-radius: 12px;
+            padding: 18px;
+            margin-top: 18px;
+        }
 
-.feedback-section label {
-    display: block;
-    margin: 18px 0 8px;
-    font-weight: bold;
-}
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
 
-.rating-heading {
-    font-size: 17px;
-}
+        .review-stars {
+            color: #ffbf00;
+            font-size: 21px;
+            letter-spacing: 2px;
+        }
 
-.star-rating {
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    max-width: 650px;
-    gap: 8px;
-    margin: 20px 0 30px;
-}
+        .review-card p {
+            color: #445066;
+            line-height: 1.6;
+            overflow-wrap: anywhere;
+        }
 
-.star-rating input {
-    position: absolute;
-    opacity: 0;
-    pointer-events: none;
-}
+        .review-card small {
+            color: #8993a5;
+        }
 
-.star-rating label {
-    font-size: clamp(45px, 12vw, 110px);
-    color: #d1d5db;
-    cursor: pointer;
-    margin: 0;
-    line-height: 1;
-    transition: 0.2s;
-}
+        /* Feedback */
 
-.star-rating label:hover,
-.star-rating label:hover ~ label,
-.star-rating input:checked ~ label {
-    color: #ffbf00;
-}
+        .feedback-section label {
+            display: block;
+            margin: 18px 0 8px;
+            font-weight: bold;
+        }
 
-.star-rating label:hover {
-    transform: scale(1.08);
-}
+        .star-rating {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+            gap: 6px;
+            margin: 12px 0 20px;
+        }
 
-.star-rating input:focus-visible + label {
-    outline: 2px solid #315de8;
-    outline-offset: 4px;
-}
+        .star-rating input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
 
-.feedback-section textarea {
-    width: 100%;
-    min-height: 110px;
-    padding: 13px;
-    border: 1px solid #d5dce8;
-    border-radius: 9px;
-    font: inherit;
-    resize: vertical;
-}
+        .star-rating label {
+            font-size: 42px;
+            color: #cbd5e1;
+            cursor: pointer;
+            margin: 0;
+            transition: 0.2s;
+        }
 
-.feedback-submit {
-    width: 100%;
-    padding: 14px;
-    margin-top: 18px;
-    border: none;
-    border-radius: 9px;
-    background: #315de8;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-}
+        .star-rating label:hover,
+        .star-rating label:hover ~ label,
+        .star-rating input:checked ~ label {
+            color: #ffc107;
+        }
 
-.feedback-submit:hover {
-    background: #244bc2;
-}
+        .star-rating label:hover {
+            transform: scale(1.12);
+        }
 
-#feedbackMessage {
-    text-align: center;
-    margin-top: 15px;
-    font-weight: bold;
-}
+        .star-rating input:focus-visible + label {
+            outline: 2px solid #315de8;
+        }
 
-@media (max-width: 650px) {
-    .feedback-section {
-        padding: 22px;
-    }
+        .feedback-section textarea {
+            width: 100%;
+            min-height: 110px;
+            padding: 13px;
+            border: 1px solid #d5dce8;
+            border-radius: 9px;
+            resize: vertical;
+        }
 
-    .star-rating {
-        gap: 3px;
-    }
-}
+        .feedback-submit {
+            width: 100%;
+            padding: 14px;
+            margin-top: 18px;
+            border: none;
+            border-radius: 9px;
+            background: #315de8;
+            color: white;
+            font-size: 16px;
+        }
 
+        .feedback-submit:hover {
+            background: #244bc2;
+        }
+
+        .feedback-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        #feedbackMessage {
+            text-align: center;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        /* Premium */
+
+        #premium {
+            padding: 55px 20px;
+            text-align: center;
+            background: #edf2fc;
+            scroll-margin-top: 20px;
+        }
+
+        .premium-heading h2 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .premium-heading p {
+            color: #68758a;
+        }
+
+        .premium-plans {
+            max-width: 1150px;
+            margin: 40px auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 22px;
+        }
+
+        .premium-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px 18px;
+            box-shadow: 0 5px 22px #00000010;
+            border: 1px solid #e7ebf2;
+        }
+
+        .premium-card h3 {
+            font-size: 21px;
+        }
+
+        .premium-card h2 {
+            font-size: 32px;
+            margin: 18px 0;
+        }
+
+        .premium-card p {
+            color: #68758a;
+        }
+
+        .premium-buy,
+        .free-plan {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 25px;
+            background: #315de8;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .premium-buy:hover {
+            background: #244bc2;
+        }
+
+        .free-plan {
+            background: #dce8ff;
+            color: #315de8;
+            cursor: default;
+        }
+
+        .premium-terms-note {
+            max-width: 750px;
+            margin: 20px auto;
+            color: #68758a;
+            line-height: 1.6;
+            font-size: 13px;
+        }
+
+        /* Payment Popup */
+
+        .payment-modal,
+        .welcome-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            background: #00000080;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+
+        .payment-box,
+        .welcome-box {
+            position: relative;
+            width: 100%;
+            max-width: 430px;
+            max-height: 90vh;
+            overflow-y: auto;
+            background: white;
+            border-radius: 18px;
+            padding: 28px 22px;
+            text-align: center;
+        }
+
+        .payment-close,
+        .welcome-close {
+            position: absolute;
+            right: 13px;
+            top: 8px;
+            border: none;
+            background: none;
+            color: #172033;
+            font-size: 30px;
+        }
+
+        .payment-option {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #d5dce8;
+            border-radius: 10px;
+            background: #f4f7fc;
+            color: #172033;
+            font-size: 16px;
+        }
+
+        #paymentQR {
+            display: block;
+            width: 210px;
+            max-width: 100%;
+            margin: 15px auto;
+        }
+
+        #paymentTimer {
+            color: #315de8;
+            font-size: 30px;
+        }
+
+        .payment-note {
+            color: #68758a;
+            font-size: 12px;
+            line-height: 1.5;
+            margin-top: 20px;
+        }
+
+        /* Tips */
+
+        .tip-card {
+            max-width: 500px;
+            margin: 40px auto;
+            padding: 25px;
+            background: white;
+            border: 1px solid #e7ebf2;
+            border-radius: 18px;
+            box-shadow: 0 5px 20px #00000010;
+        }
+
+        .tip-card h3 {
+            margin-top: 0;
+        }
+
+        .tip-card > p {
+            color: #68758a;
+        }
+
+        .tip-terms {
+            margin: 20px 0;
+            padding: 13px;
+            background: #f4f7fc;
+            border-radius: 9px;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        .tip-terms label {
+            display: flex;
+            align-items: flex-start;
+            gap: 9px;
+            cursor: pointer;
+        }
+
+        .tip-terms input {
+            margin-top: 2px;
+        }
+
+        .tip-terms a {
+            color: #315de8;
+        }
+
+        #giveTipBtn,
+        #payTipBtn {
+            width: 100%;
+            padding: 13px;
+            border: none;
+            border-radius: 10px;
+            background: #315de8;
+            color: white;
+            font-weight: bold;
+        }
+
+        #giveTipBtn:disabled,
+        #payTipBtn:disabled {
+            background: #aab6d1;
+            cursor: not-allowed;
+        }
+
+        .tip-amounts {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin: 15px 0;
+        }
+
+        .tip-choice {
+            padding: 11px 5px;
+            border: 1px solid #d5dce8;
+            border-radius: 9px;
+            background: #f4f7fc;
+            color: #315de8;
+            font-weight: bold;
+        }
+
+        .tip-choice.active {
+            background: #315de8;
+            color: white;
+        }
+
+        #tipAmount {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d5dce8;
+            border-radius: 9px;
+            margin: 12px 0;
+        }
+
+        #tipQR {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f4f7fc;
+            border-radius: 12px;
+        }
+
+        #tipQR img {
+            width: 210px;
+            max-width: 100%;
+        }
+
+        #tipQRAmount {
+            font-weight: bold;
+            color: #315de8;
+        }
+
+        /* Terms */
+
+        .terms-section {
+            max-width: 850px;
+            margin: 35px auto;
+            padding: 25px;
+            background: white;
+            border-radius: 14px;
+            line-height: 1.7;
+        }
+
+        .terms-section h2 {
+            color: #315de8;
+        }
+
+        /* Chatbot */
+
+        #chatbot {
+            position: fixed;
+            right: 22px;
+            bottom: 22px;
+            z-index: 9999;
+            font-family: Arial, sans-serif;
+        }
+
+        #chatToggle {
+            width: 60px;
+            height: 60px;
+            border: none;
+            border-radius: 50%;
+            background: #315de8;
+            color: white;
+            font-size: 27px;
+            box-shadow: 0 5px 18px #00000035;
+        }
+
+        #chatWindow {
+            display: none;
+            position: absolute;
+            right: 0;
+            bottom: 75px;
+            width: 340px;
+            max-width: calc(100vw - 30px);
+            height: 470px;
+            flex-direction: column;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 35px #00000030;
+            border: 1px solid #e1e6f0;
+        }
+
+        .chat-header {
+            background: #111c3a;
+            color: white;
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 75px;
+        }
+
+        .chat-header small {
+            display: block;
+            color: #cbd5e8;
+            margin-top: 5px;
+        }
+
+        .chat-status {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .online-dot {
+            width: 8px;
+            height: 8px;
+            display: inline-block;
+            background: #35d07f;
+            border-radius: 50%;
+        }
+
+        .chat-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .chat-header-actions button {
+            border: none;
+            background: #26395f;
+            color: white;
+            border-radius: 7px;
+            padding: 7px 9px;
+            font-size: 16px;
+        }
+
+        #chatMessages {
+            flex: 1;
+            min-height: 0;
+            padding: 15px;
+            overflow-y: auto;
+            background: #f4f7fc;
+        }
+
+        .bot-message,
+        .user-message {
+            padding: 11px 13px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            max-width: 88%;
+            font-size: 14px;
+            line-height: 1.5;
+            overflow-wrap: anywhere;
+            white-space: pre-wrap;
+        }
+
+        .bot-message {
+            background: white;
+            color: #172033;
+            border: 1px solid #e5e9f1;
+        }
+
+        .user-message {
+            background: #315de8;
+            color: white;
+            margin-left: auto;
+        }
+
+        .chat-questions {
+            display: flex;
+            gap: 6px;
+            padding: 9px;
+            overflow-x: auto;
+            background: white;
+        }
+
+        .chat-questions button {
+            flex-shrink: 0;
+            border: 1px solid #d5dce8;
+            border-radius: 20px;
+            background: white;
+            color: #315de8;
+            padding: 7px 10px;
+            font-size: 11px;
+        }
+
+        #chatForm {
+            display: flex;
+            gap: 7px;
+            padding: 10px;
+            border-top: 1px solid #e5e9f1;
+            background: white;
+        }
+
+        #chatInput {
+            flex: 1;
+            min-width: 0;
+            padding: 11px;
+            border: 1px solid #d5dce8;
+            border-radius: 20px;
+            outline: none;
+        }
+
+        #chatForm button {
+            width: 40px;
+            border: none;
+            border-radius: 50%;
+            background: #315de8;
+            color: white;
+            font-size: 18px;
+        }
+
+        #chatHistoryPanel {
+            display: none;
+            flex: 1;
+            min-height: 0;
+            padding: 15px;
+            overflow-y: auto;
+            background: #f4f7fc;
+        }
+
+        #chatHistoryPanel h4 {
+            margin: 0 0 15px;
+        }
+
+        .history-item {
+            background: white;
+            border: 1px solid #e1e6f0;
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 10px;
+        }
+
+        .history-item p {
+            margin: 0 0 10px;
+            font-size: 13px;
+            overflow-wrap: anywhere;
+        }
+
+        .history-item button {
+            border: none;
+            border-radius: 6px;
+            padding: 7px 10px;
+            margin-right: 5px;
+            background: #315de8;
+            color: white;
+            font-size: 12px;
+        }
+
+        .history-item .delete-history {
+            background: #d93025;
+        }
+
+        #backToChat {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 8px;
+            background: #111c3a;
+            color: white;
+        }
+
+        .history-empty {
+            color: #68758a;
+            text-align: center;
+            padding: 25px 5px;
+            font-size: 14px;
+        }
+
+        /* Footer */
 
         footer {
             margin-top: 50px;
@@ -371,13 +895,13 @@
             margin: 0 8px;
         }
 
-        @media (max-width: 650px) {
+        @media (max-width: 700px) {
             .header-inner {
                 justify-content: center;
                 text-align: center;
             }
 
-            nav {
+            .main-nav {
                 justify-content: center;
             }
 
@@ -393,406 +917,30 @@
                 grid-template-columns: 1fr;
             }
 
-            .feedback-section {
+            .feedback-section,
+            .public-reviews {
                 padding: 22px;
+            }
+
+            .premium-heading h2 {
+                font-size: 28px;
             }
         }
 
-/* Toolify 5-Star Feedback Rating */
+        @media (max-width: 400px) {
+            #chatbot {
+                right: 12px;
+                bottom: 12px;
+            }
 
-.star-rating {
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: flex-end;
-    gap: 6px;
-    margin: 12px 0 20px;
-}
+            #chatWindow {
+                width: calc(100vw - 24px);
+            }
 
-.star-rating input {
-    display: none;
-}
-
-.star-rating label {
-    font-size: 38px;
-    color: #cbd5e1;
-    cursor: pointer;
-    margin: 0;
-    transition: color 0.2s, transform 0.2s;
-}
-
-.star-rating label:hover,
-.star-rating label:hover ~ label,
-.star-rating input:checked ~ label {
-    color: #ffc107;
-}
-
-.star-rating label:hover {
-    transform: scale(1.15);
-}
-   
-/* Toolify Chatbot Design */
-#chatbot {
-    position: fixed;
-    right: 22px;
-    bottom: 22px;
-    z-index: 9999;
-    font-family: Arial, sans-serif;
-}
-
-#chatToggle {
-    width: 60px;
-    height: 60px;
-    border: none;
-    border-radius: 50%;
-    background: #315de8;
-    color: white;
-    font-size: 27px;
-    cursor: pointer;
-    box-shadow: 0 5px 18px #00000035;
-}
-
-#chatWindow {
-    display: none;
-    position: absolute;
-    right: 0;
-    bottom: 75px;
-    width: 340px;
-    max-width: calc(100vw - 30px);
-    height: 470px;
-    background: white;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 8px 35px #00000030;
-    border: 1px solid #e1e6f0;
-}
-
-.chat-header {
-    background: #111c3a;
-    color: white;
-    padding: 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.chat-header small {
-    display: block;
-    color: #cbd5e8;
-    margin-top: 5px;
-}
-#chatClose {
-    width: 30px;
-    height: 30px;
-    border: none;
-    border-radius: 7px;
-    background: #26395f;
-    color: white;
-    font-size: 20px;
-    cursor: pointer;
-    line-height: 1;
-}
-
-/* Chat History and Delete Options */
-.chat-header-actions {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-}
-
-.chat-header-actions button {
-    border: none;
-    background: #26395f;
-    color: white;
-    border-radius: 7px;
-    padding: 7px 9px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-.chat-header-actions button:hover {
-    background: #315de8;
-}
-
-#chatHistoryPanel {
-    height: 390px;
-    padding: 15px;
-    overflow-y: auto;
-    background: #f4f7fc;
-}
-
-#chatHistoryPanel h4 {
-    margin: 0 0 15px;
-    color: #172033;
-}
-
-.history-item {
-    background: white;
-    border: 1px solid #e1e6f0;
-    border-radius: 10px;
-    padding: 12px;
-    margin-bottom: 10px;
-}
-
-.history-item p {
-    margin: 0 0 10px;
-    font-size: 13px;
-    color: #172033;
-    overflow-wrap: anywhere;
-}
-
-.history-item button {
-    border: none;
-    border-radius: 6px;
-    padding: 7px 10px;
-    margin-right: 5px;
-    cursor: pointer;
-    background: #315de8;
-    color: white;
-    font-size: 12px;
-}
-
-.history-item .delete-history {
-    background: #d93025;
-}
-
-#backToChat {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 8px;
-    background: #111c3a;
-    color: white;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-.history-empty {
-    color: #68758a;
-    text-align: center;
-    padding: 25px 5px;
-    font-size: 14px;
-}
-
-
-#chatMessages {
-    height: 270px;
-    padding: 15px;
-    overflow-y: auto;
-    background: #f4f7fc;
-}
-
-.bot-message,
-.user-message {
-    padding: 11px 13px;
-    border-radius: 12px;
-    margin-bottom: 12px;
-    max-width: 88%;
-    font-size: 14px;
-    line-height: 1.5;
-    overflow-wrap: anywhere;
-    white-space: pre-wrap;
-}
-
-.bot-message {
-    background: white;
-    color: #172033;
-    border: 1px solid #e5e9f1;
-}
-
-.user-message {
-    background: #315de8;
-    color: white;
-    margin-left: auto;
-}
-
-.chat-questions {
-    display: flex;
-    gap: 6px;
-    padding: 9px;
-    overflow-x: auto;
-    background: white;
-}
-
-.chat-questions button {
-    flex-shrink: 0;
-    border: 1px solid #d5dce8;
-    border-radius: 20px;
-    background: white;
-    color: #315de8;
-    padding: 7px 10px;
-    cursor: pointer;
-    font-size: 11px;
-}
-
-#chatForm {
-    display: flex;
-    gap: 7px;
-    padding: 10px;
-    border-top: 1px solid #e5e9f1;
-    background: white;
-}
-
-#chatInput {
-    flex: 1;
-    min-width: 0;
-    padding: 11px;
-    border: 1px solid #d5dce8;
-    border-radius: 20px;
-    outline: none;
-}
-
-#chatForm button {
-    width: 40px;
-    border: none;
-    border-radius: 50%;
-    background: #315de8;
-    color: white;
-    font-size: 18px;
-    cursor: pointer;
-}
-
-@media (max-width: 400px) {
-    #chatbot {
-        right: 12px;
-        bottom: 12px;
-    }
-
-    #chatWindow {
-        width: calc(100vw - 24px);
-    }
-}
-/* Toolify Chatbot Professional Improvements */
-.chat-status {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-}
-
-.online-dot {
-    width: 8px;
-    height: 8px;
-    display: inline-block;
-    background: #35d07f;
-    border-radius: 50%;
-    box-shadow: 0 0 7px #35d07f80;
-}
-
-#chatWindow {
-    display: none;
-    flex-direction: column;
-    box-shadow: 0 12px 45px #00000030;
-    animation: chatOpen 0.25s ease;
-}
-
-@keyframes chatOpen {
-    from {
-        opacity: 0;
-        transform: translateY(15px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-#chatWindow[style*="display: block"] {
-    display: flex !important;
-}
-
-.chat-header {
-    min-height: 75px;
-}
-
-.chat-header strong {
-    font-size: 16px;
-}
-
-.bot-message {
-    border-radius: 4px 14px 14px 14px;
-    box-shadow: 0 2px 6px #00000008;
-}
-
-.user-message {
-    border-radius: 14px 4px 14px 14px;
-}
-
-#chatInput:focus {
-    border-color: #315de8;
-    box-shadow: 0 0 0 3px #315de820;
-}
-
-#chatForm button:hover {
-    background: #244bc2;
-    transform: scale(1.05);
-}
-
-#chatForm button {
-    transition: 0.2s;
-}
-
-.history-item {
-    transition: 0.2s;
-}
-
-.history-item:hover {
-    border-color: #315de8;
-    box-shadow: 0 3px 10px #315de815;
-}
-/* Public User Reviews */
-
-.public-reviews {
-    max-width: 850px;
-    margin: 60px auto;
-    padding: 30px;
-    background: #ffffff;
-    border: 1px solid #e7ebf2;
-    border-radius: 16px;
-    box-shadow: 0 4px 15px #00000008;
-}
-
-.public-reviews h2 {
-    text-align: center;
-    margin-top: 0;
-    color: #315de8;
-}
-
-.public-reviews > p {
-    text-align: center;
-    color: #68758a;
-}
-
-.review-card {
-    background: #f8faff;
-    border: 1px solid #e7ebf2;
-    border-radius: 12px;
-    padding: 18px;
-    margin-top: 18px;
-}
-
-.review-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
-}
-
-.review-stars {
-    color: #ffbf00;
-    font-size: 21px;
-    letter-spacing: 2px;
-}
-
-.review-card p {
-    color: #445066;
-    line-height: 1.6;
-    overflow-wrap: anywhere;
-}
-
-.review-card small {
-    color: #8993a5;
-}
-
+            .tip-amounts {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
     </style>
 </head>
 
@@ -809,16 +957,21 @@
             </div>
         </div>
 
-        <nav>
-            <a href="/">Home</a>
+        <nav class="main-nav">
+            <a href="/">🏠 Home</a>
 
             {% if current_user %}
-                <a href="/settings">Settings</a>
-                <a href="/profile">Profile</a>
+                <a href="/profile">👤 Profile</a>
+                <a href="/settings">⚙️ Settings</a>
+                <a href="#premium" class="premium-nav">👑 Get Premium</a>
+                <a href="#tip-card" class="tip-nav">❤️ Give Tip</a>
                 <a href="/logout">Logout</a>
             {% else %}
-                <a href="/login">Login</a>
+                <a href="/login">🔐 Login</a>
                 <a href="/register">Register</a>
+                <a href="#premium" class="premium-nav">👑 Get Premium</a>
+                <a href="#tip-card" class="tip-nav">❤️ Give Tip</a>
+                <a href="/settings">⚙️ Settings</a>
             {% endif %}
         </nav>
 
@@ -827,9 +980,7 @@
 
 <section class="hero">
     <div class="hero-tag">✨ Your All-in-One Online Tools Platform</div>
-
     <h2>Welcome to Toolify</h2>
-
     <p>
         Convert files, work with PDFs and images, and simplify your daily tasks.
         <br>
@@ -863,7 +1014,6 @@
     <div class="tools" id="toolsContainer">
 
         {% for tool in tools %}
-
         <a
             class="tool"
             href="/tools/{{ tool[1] }}"
@@ -875,7 +1025,6 @@
             <h3>{{ tool[0] }}</h3>
             <p>{{ tool[2] }}</p>
         </a>
-
         {% endfor %}
 
     </div>
@@ -885,147 +1034,80 @@
         <p>Try another search keyword.</p>
     </div>
 
-<!-- Public User Reviews -->
-<section class="public-reviews" id="user-reviews">
-    <h2>What Our Users Say</h2>
-    <p>Real feedback from Toolify users.</p>
+    <!-- Public Reviews -->
 
-    {% for review in approved_feedback %}
-        <div class="review-card">
+    <section class="public-reviews" id="user-reviews">
+        <h2>What Our Users Say</h2>
+        <p>Real feedback from Toolify users.</p>
 
-            <div class="review-header">
-                <strong>Toolify User</strong>
+        {% for review in approved_feedback %}
+            <div class="review-card">
+                <div class="review-header">
+                    <strong>Toolify User</strong>
 
-                <span class="review-stars">
-                    {% for star in range(review.rating) %}★{% endfor %}{% for star in range(5 - review.rating) %}☆{% endfor %}
-                </span>
+                    <span class="review-stars">
+                        {% for star in range(review.rating) %}★{% endfor %}{% for star in range(5 - review.rating) %}☆{% endfor %}
+                    </span>
+                </div>
+
+                <p>{{ review.comment or "Rated Toolify without a comment." }}</p>
+                <small>{{ review.created_at }}</small>
+            </div>
+        {% else %}
+            <p>No approved reviews yet. Be the first to share your experience!</p>
+        {% endfor %}
+    </section>
+
+    <!-- Feedback -->
+
+    <section class="feedback-section" id="feedback">
+        <h2>Share Your Feedback</h2>
+        <p>Tell us what you think about Toolify. Your feedback helps us improve.</p>
+
+        <form id="feedbackForm">
+
+            <label class="rating-heading">Rate your experience *</label>
+
+            <div class="star-rating" role="group" aria-label="Rate your experience">
+                <input type="radio" id="star5" name="rating" value="5" required>
+                <label for="star5" title="5 stars">★</label>
+
+                <input type="radio" id="star4" name="rating" value="4">
+                <label for="star4" title="4 stars">★</label>
+
+                <input type="radio" id="star3" name="rating" value="3">
+                <label for="star3" title="3 stars">★</label>
+
+                <input type="radio" id="star2" name="rating" value="2">
+                <label for="star2" title="2 stars">★</label>
+
+                <input type="radio" id="star1" name="rating" value="1">
+                <label for="star1" title="1 star">★</label>
             </div>
 
-            <p>{{ review.comment or "Rated Toolify without a comment." }}</p>
+            <label for="feedbackComment">Your Comments (Optional)</label>
 
-            <small>{{ review.created_at }}</small>
+            <textarea
+                id="feedbackComment"
+                name="comment"
+                placeholder="Tell us what you think..."
+            ></textarea>
 
-        </div>
-    {% else %}
-        <p>No approved reviews yet. Be the first to share your experience!</p>
-    {% endfor %}
-</section>
+            <button type="submit" class="feedback-submit">
+                Submit Feedback
+            </button>
 
-<!-- Feedback Section -->
-<section class="feedback-section" id="feedback">
-    <h2>Share Your Feedback</h2>
-    <p>Tell us what you think about Toolify. Your feedback helps us improve.</p>
+            <p id="feedbackMessage" aria-live="polite"></p>
 
-    <form id="feedbackForm">
-
-        <label class="rating-heading">Rate your experience *</label>
-
-        <div class="star-rating" role="group" aria-label="Rate your experience">
-            <input type="radio" id="star5" name="rating" value="5" required>
-            <label for="star5" title="5 stars">★</label>
-
-            <input type="radio" id="star4" name="rating" value="4">
-            <label for="star4" title="4 stars">★</label>
-
-            <input type="radio" id="star3" name="rating" value="3">
-            <label for="star3" title="3 stars">★</label>
-
-            <input type="radio" id="star2" name="rating" value="2">
-            <label for="star2" title="2 stars">★</label>
-
-            <input type="radio" id="star1" name="rating" value="1">
-            <label for="star1" title="1 star">★</label>
-        </div>
-
-        <label for="feedbackComment">Your Comments (Optional)</label>
-        <textarea
-            id="feedbackComment"
-            name="comment"
-            placeholder="Tell us what you think..."
-        ></textarea>
-
-        <button type="submit" class="feedback-submit">
-            Submit Feedback
-        </button>
-
-        <p id="feedbackMessage"></p>
-
-    </form>
-</section>
+        </form>
+    </section>
 
 </main>
 
-<!-- Toolify FAQ Chatbot -->
-<div id="chatbot">
-    <button id="chatToggle" aria-label="Open Toolify Support">
-        💬
-    </button>
+<!-- Premium Membership -->
 
-    <div id="chatWindow">
-
-<div class="chat-header">
-    <div>
-        <strong>🛠️ Toolify Support</strong>
-        <small class="chat-status">
-    <span class="online-dot"></span>
-    FAQ Assistant • Online
-</small>
-    </div>
-
-    <div class="chat-header-actions">
-        <button id="chatHistory" title="Previous Chats">🕘</button>
-        <button id="clearChat" title="Clear Current Chat">🗑️</button>
-        <button id="chatClose" aria-label="Close chatbot">×</button>
-    </div>
-</div>
-<!-- Chat History Panel -->
-<div id="chatHistoryPanel" style="display: none;">
-
-    <h4>Previous Conversations</h4>
-
-    <div id="chatHistoryList"></div>
-
-    <button type="button" id="backToChat">
-        Back to Chat
-    </button>
-
-</div>
-        <div id="chatMessages">
-<div class="bot-message">
-    👋 Hello! Welcome to Toolify Support.
-
-    Main aapki Toolify ke tools, file conversion,
-    account aur website features se related help kar sakta hoon.
-
-    Aap neeche diye gaye topics mein se choose karein
-    ya apna question type karein.
-</div>
-        </div>
-
-        <div class="chat-questions">
-    <button type="button" data-question="How to convert files?">📄 Convert files</button>
-    <button type="button" data-question="How to remove image background?">🖼️ Background remover</button>
-    <button type="button" data-question="How to create an account?">👤 Account help</button>
-    <button type="button" data-question="How to submit feedback?">⭐ Feedback</button>
-    <button type="button" data-question="Is Toolify free?">💰 Pricing</button>
-    <button type="button" data-question="How to contact support?">💬 Support</button>
-</div>
-
-        <form id="chatForm">
-            <input
-                type="text"
-                id="chatInput"
-                placeholder="Ask your question..."
-                maxlength="300"
-                required
-            >
-            <button type="submit">➤</button>
-        </form>
-    </div>
-</div>
-
-<!-- Toolify Premium Membership -->
 <section id="premium">
+
     <div class="premium-heading">
         <h2>Join Toolify Premium</h2>
         <p>Choose a plan that works best for you.</p>
@@ -1074,12 +1156,18 @@
 
     </div>
 
-    <!-- Payment Popup -->
+    <p class="premium-terms-note">
+        Review the applicable membership and refund terms before making a payment.
+        A payment QR scan alone does not activate membership.
+    </p>
+
+    <!-- Premium Payment Popup -->
+
     <div id="paymentModal" class="payment-modal">
         <div class="payment-box">
 
             <button type="button" id="closePayment"
-                class="payment-close">×</button>
+                class="payment-close" aria-label="Close">×</button>
 
             <h2>Complete Your Payment</h2>
 
@@ -1088,16 +1176,14 @@
 
             <h3>Select Payment Mode</h3>
 
-            <button type="button" id="upiOption"
-                class="payment-option">
+            <button type="button" id="upiOption" class="payment-option">
                 📱 UPI QR Payment
             </button>
 
             <div id="qrPayment" style="display:none;">
                 <h3>Scan QR using your UPI app</h3>
 
-                <img id="paymentQR" src=""
-                    alt="Payment QR Code">
+                <img id="paymentQR" src="" alt="Payment QR Code">
 
                 <h2 id="paymentTimer">05:00</h2>
 
@@ -1108,219 +1194,214 @@
 
             <p class="payment-note">
                 Payment verification is not enabled yet.
-                Do not assume membership is activated until payment
-                is verified.
+                Membership is not activated automatically.
             </p>
 
         </div>
     </div>
 
+    <!-- Tip Section -->
 
-<!-- Optional Tips -->
-<div class="tip-card">
-    <h3>❤️ Support Toolify</h3>
-    <p>Support our platform with an optional tip.</p>
+    <div class="tip-card" id="tip-card">
 
-    <div class="tip-terms">
-        <label>
-            <input type="checkbox" id="acceptTipTerms">
-            I accept the Terms & Conditions.
-        </label>
-    </div>
+        <h3>❤️ Support Toolify</h3>
+        <p>Support our platform with an optional tip.</p>
 
-    <button type="button" id="giveTipBtn" disabled>
-        ❤️ Give Tip
-    </button>
-
-    <div id="tipOptions" style="display:none;">
-        <h4>Select Tip Amount</h4>
-
-        <div class="tip-amounts">
-            <button type="button" class="tip-choice" data-amount="10">₹10</button>
-            <button type="button" class="tip-choice" data-amount="20">₹20</button>
-            <button type="button" class="tip-choice" data-amount="50">₹50</button>
-            <button type="button" class="tip-choice" data-amount="100">₹100</button>
+        <div class="tip-terms">
+            <label>
+                <input type="checkbox" id="acceptTipTerms">
+                <span>
+                    I have read and accept the
+                    <a href="#terms">Terms & Conditions</a>,
+                    including the tip refund policy.
+                </span>
+            </label>
         </div>
 
-        <input type="number" id="tipAmount"
-            min="1" step="1"
-            placeholder="Enter custom amount (₹)">
-
-        <button type="button" id="payTipBtn" disabled>
-            Continue to Payment
+        <button type="button" id="giveTipBtn" disabled>
+            ❤️ Give Tip
         </button>
 
-        <div id="tipQR" style="display:none;">
-            <img src="{{ url_for('static', filename='qr/Custom.jpeg') }}"
-                alt="Toolify tip payment QR">
-            <p>Scan using your UPI app.</p>
-            <p id="tipQRAmount"></p>
+        <div id="tipOptions" style="display:none;">
+
+            <h4>Select Tip Amount</h4>
+
+            <div class="tip-amounts">
+                <button type="button" class="tip-choice" data-amount="10">₹10</button>
+                <button type="button" class="tip-choice" data-amount="20">₹20</button>
+                <button type="button" class="tip-choice" data-amount="50">₹50</button>
+                <button type="button" class="tip-choice" data-amount="100">₹100</button>
+            </div>
+
+            <label for="tipAmount">Or enter a custom amount</label>
+
+            <input
+                type="number"
+                id="tipAmount"
+                min="1"
+                max="100000"
+                step="1"
+                placeholder="Enter custom amount (₹)"
+            >
+
+            <button type="button" id="payTipBtn" disabled>
+                Continue to Payment
+            </button>
+
+            <div id="tipQR" style="display:none;">
+                <h4>Scan to support Toolify</h4>
+
+                <img
+                    src="{{ url_for('static', filename='qr/Custom.jpeg') }}"
+                    alt="Toolify tip payment QR"
+                >
+
+                <p>Scan using your UPI app.</p>
+                <p id="tipQRAmount"></p>
+
+                <small>
+                    Check the amount in your UPI app before confirming.
+                </small>
+            </div>
+
         </div>
+    </div>
+
+</section>
+
+<!-- Terms and Conditions -->
+
+<section class="terms-section" id="terms">
+    <h2>Terms & Conditions</h2>
+
+    <h3>Premium Membership</h3>
+    <p>
+        Premium plans and their features should be reviewed before payment.
+        Refund requests must be submitted within 7 days of purchase and are
+        subject to the applicable refund policy and law.
+    </p>
+
+    <h3>Optional Tips</h3>
+    <p>
+        Tips are voluntary contributions to support Toolify.
+        Tips are non-refundable, except where required by applicable law
+        or payment-provider rules.
+    </p>
+
+    <h3>Payment Verification</h3>
+    <p>
+        A QR code or payment screenshot is not proof of successful verification.
+        Membership or other paid benefits should only be activated after
+        a trusted payment verification process.
+    </p>
+
+    <h3>Contact</h3>
+    <p>
+        If you have a question about these terms, use the Toolify support
+        chatbot or the available contact page.
+    </p>
+</section>
+
+<!-- Welcome Popup: appears when URL contains ?welcome=1 -->
+
+<div class="welcome-modal" id="welcomeModal">
+    <div class="welcome-box">
+
+        <button type="button" class="welcome-close" id="closeWelcome"
+            aria-label="Close">×</button>
+
+        <h2>🎉 Welcome to Toolify!</h2>
+
+        <p>Your registration process is complete.</p>
+        <p>Explore Premium membership or support Toolify with an optional tip.</p>
+
+        <button type="button" class="premium-buy" id="welcomePremium">
+            👑 Explore Premium
+        </button>
+
+        <br><br>
+
+        <button type="button" class="payment-option" id="welcomeTip">
+            ❤️ Give a Tip
+        </button>
+
     </div>
 </div>
 
+<!-- FAQ Chatbot -->
 
-    <p>Refund requests: within 7 days, subject to applicable terms and rules.</p>
-</section>
+<div id="chatbot">
 
-<style>
-#premium {
-    padding: 55px 20px;
-    text-align: center;
-    background: #f4f7fc;
-}
+    <button id="chatToggle" aria-label="Open Toolify Support">
+        💬
+    </button>
 
-.premium-heading h2 {
-    font-size: 36px;
-    margin-bottom: 10px;
-}
+    <div id="chatWindow">
 
-.premium-heading p {
-    color: #68758a;
-}
+        <div class="chat-header">
 
-.premium-plans {
-    max-width: 1150px;
-    margin: 45px auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 25px;
-}
+            <div>
+                <strong>🛠️ Toolify Support</strong>
+                <small class="chat-status">
+                    <span class="online-dot"></span>
+                    FAQ Assistant • Online
+                </small>
+            </div>
 
-.premium-card {
-    background: white;
-    border-radius: 22px;
-    padding: 25px 18px;
-    box-shadow: 0 5px 22px #00000010;
-    border: 1px solid #e7ebf2;
-}
+            <div class="chat-header-actions">
+                <button id="chatHistory" title="Previous Chats">🕘</button>
+                <button id="clearChat" title="Clear Current Chat">🗑️</button>
+                <button id="chatClose" aria-label="Close chatbot">×</button>
+            </div>
 
-.premium-card h3 {
-    font-size: 21px;
-}
+        </div>
 
-.premium-card h2 {
-    font-size: 32px;
-    margin: 18px 0;
-}
+        <div id="chatHistoryPanel">
 
-.premium-card p {
-    color: #68758a;
-}
+            <h4>Previous Conversations</h4>
 
-.premium-buy,
-.free-plan {
-    width: 100%;
-    padding: 13px;
-    border: none;
-    border-radius: 25px;
-    background: #315de8;
-    color: white;
-    font-size: 15px;
-    font-weight: bold;
-    cursor: pointer;
-}
+            <div id="chatHistoryList"></div>
 
-.premium-buy:hover {
-    background: #244bc2;
-}
+            <button type="button" id="backToChat">
+                Back to Chat
+            </button>
 
-.free-plan {
-    background: #dce8ff;
-    color: #315de8;
-    cursor: default;
-}
+        </div>
 
-.payment-modal {
-    display: none;
-    position: fixed;
-    inset: 0;
-    z-index: 10000;
-    background: #00000080;
-    justify-content: center;
-    align-items: center;
-    padding: 15px;
-}
+        <div id="chatMessages">
+            <div class="bot-message">
+                👋 Hello! Welcome to Toolify Support.
 
-.payment-box {
-    position: relative;
-    width: 100%;
-    max-width: 420px;
-    max-height: 90vh;
-    overflow-y: auto;
-    background: white;
-    border-radius: 18px;
-    padding: 28px 22px;
-    text-align: center;
-}
+                Main aapki Toolify ke tools, file conversion,
+                account aur website features se related help kar sakta hoon.
 
-.payment-close {
-    position: absolute;
-    right: 15px;
-    top: 10px;
-    border: none;
-    background: none;
-    font-size: 30px;
-    cursor: pointer;
-}
+                Aap neeche diye gaye topics mein se choose karein
+                ya apna question type karein.
+            </div>
+        </div>
 
-.payment-option {
-    width: 100%;
-    padding: 14px;
-    border: 1px solid #d5dce8;
-    border-radius: 10px;
-    background: #f4f7fc;
-    color: #172033;
-    cursor: pointer;
-    font-size: 16px;
-}
+        <div class="chat-questions">
+            <button type="button" data-question="How to convert files?">📄 Convert files</button>
+            <button type="button" data-question="How to remove image background?">🖼️ Background remover</button>
+            <button type="button" data-question="How to create an account?">👤 Account help</button>
+            <button type="button" data-question="How to submit feedback?">⭐ Feedback</button>
+            <button type="button" data-question="Is Toolify free?">💰 Pricing</button>
+            <button type="button" data-question="How to contact support?">💬 Support</button>
+        </div>
 
-#paymentQR {
-    display: block;
-    width: 210px;
-    max-width: 100%;
-    margin: 15px auto;
-}
+        <form id="chatForm">
+            <input
+                type="text"
+                id="chatInput"
+                placeholder="Ask your question..."
+                maxlength="300"
+                required
+            >
+            <button type="submit">➤</button>
+        </form>
 
-#paymentTimer {
-    color: #315de8;
-    font-size: 30px;
-}
-
-.payment-note {
-    color: #68758a;
-    font-size: 12px;
-    line-height: 1.5;
-    margin-top: 20px;
-}
-
-.tip-card {
-    max-width: 350px;
-    margin: 35px auto;
-    padding: 22px;
-    background: white;
-    border-radius: 16px;
-}
-
-.tip-card input {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    margin: 12px 0;
-}
-
-.tip-card img {
-    width: 180px;
-    max-width: 100%;
-}
-
-@media(max-width: 600px) {
-    .premium-heading h2 {
-        font-size: 28px;
-    }
-}
-</style>
+    </div>
+</div>
 
 <footer>
     <h2>Toolify</h2>
@@ -1330,12 +1411,19 @@
     <p>
         <a href="/">Home</a>
         <a href="/contact">Contact</a>
+        <a href="#premium">Premium</a>
+        <a href="#terms">Terms</a>
+        <a href="#feedback">Feedback</a>
     </p>
 
     <p>© 2026 Toolify. All rights reserved.</p>
 </footer>
 
 <script>
+document.addEventListener("DOMContentLoaded", function() {
+
+    /* Tool Search and Categories */
+
     const searchInput = document.getElementById("toolSearch");
     const toolCards = document.querySelectorAll(".tool");
     const categoryButtons = document.querySelectorAll(".category button");
@@ -1348,19 +1436,16 @@
         let visibleCount = 0;
 
         toolCards.forEach(card => {
-            const name = card.dataset.name;
-            const description = card.dataset.description;
-            const slug = card.dataset.slug;
+            const name = card.dataset.name || "";
+            const description = card.dataset.description || "";
+            const slug = card.dataset.slug || "";
 
             const searchMatch =
                 name.includes(search) ||
                 description.includes(search) ||
                 slug.includes(search);
 
-            const isPdf =
-                slug.includes("pdf") ||
-                slug.includes("word-to-pdf") ||
-                slug.includes("excel-to-pdf");
+            const isPdf = slug.includes("pdf");
 
             const isImage =
                 slug.includes("image") ||
@@ -1406,9 +1491,10 @@
         });
     });
 
-    // Tool icons
+    /* Tool Icons */
+
     toolCards.forEach(card => {
-        const slug = card.dataset.slug;
+        const slug = card.dataset.slug || "";
         const icon = card.querySelector(".tool-icon");
 
         if (slug.includes("merge")) {
@@ -1417,13 +1503,20 @@
             icon.textContent = "✂️";
         } else if (slug.includes("compress")) {
             icon.textContent = "📦";
-        } else if (slug.includes("image") || slug.includes("jpg") || slug.includes("png")) {
+        } else if (
+            slug.includes("image") ||
+            slug.includes("jpg") ||
+            slug.includes("png")
+        ) {
             icon.textContent = "🖼️";
         } else if (slug.includes("background")) {
             icon.textContent = "🎨";
         } else if (slug.includes("watermark")) {
             icon.textContent = "💧";
-        } else if (slug.includes("protect") || slug.includes("password")) {
+        } else if (
+            slug.includes("protect") ||
+            slug.includes("password")
+        ) {
             icon.textContent = "🔒";
         } else if (slug.includes("rotate")) {
             icon.textContent = "🔄";
@@ -1436,14 +1529,17 @@
         }
     });
 
-    // Feedback form
+    /* Feedback Form */
+
     const feedbackForm = document.getElementById("feedbackForm");
     const feedbackMessage = document.getElementById("feedbackMessage");
 
     feedbackForm.addEventListener("submit", async function(event) {
         event.preventDefault();
 
-        const submitButton = feedbackForm.querySelector("button[type='submit']");
+        const submitButton =
+            feedbackForm.querySelector("button[type='submit']");
+
         submitButton.disabled = true;
         submitButton.textContent = "Submitting...";
         feedbackMessage.textContent = "";
@@ -1457,12 +1553,15 @@
             const data = await response.json();
 
             if (!response.ok || data.success === false) {
-                throw new Error(data.message || "Feedback could not be submitted.");
+                throw new Error(
+                    data.message || "Feedback could not be submitted."
+                );
             }
 
             feedbackMessage.style.color = "green";
             feedbackMessage.textContent =
-                data.message || "Thank you! Your feedback has been submitted.";
+                data.message ||
+                "Thank you! Your feedback has been submitted.";
 
             feedbackForm.reset();
 
@@ -1476,388 +1575,590 @@
         }
     });
 
-// Toolify FAQ Chatbot
+    /* Chatbot */
 
-// Toolify FAQ Chatbot with Chat History
+    const chatToggle = document.getElementById("chatToggle");
+    const chatWindow = document.getElementById("chatWindow");
+    const chatClose = document.getElementById("chatClose");
+    const chatForm = document.getElementById("chatForm");
+    const chatInput = document.getElementById("chatInput");
+    const chatMessages = document.getElementById("chatMessages");
 
-const chatToggle = document.getElementById("chatToggle");
-const chatWindow = document.getElementById("chatWindow");
-const chatClose = document.getElementById("chatClose");
-const chatForm = document.getElementById("chatForm");
-const chatInput = document.getElementById("chatInput");
-const chatMessages = document.getElementById("chatMessages");
+    const chatHistoryButton = document.getElementById("chatHistory");
+    const clearChat = document.getElementById("clearChat");
+    const chatHistoryPanel = document.getElementById("chatHistoryPanel");
+    const chatHistoryList = document.getElementById("chatHistoryList");
+    const backToChat = document.getElementById("backToChat");
 
-const chatHistory = document.getElementById("chatHistory");
-const clearChat = document.getElementById("clearChat");
-const chatHistoryPanel = document.getElementById("chatHistoryPanel");
-const chatHistoryList = document.getElementById("chatHistoryList");
-const backToChat = document.getElementById("backToChat");
+    const STORAGE_KEY = "toolify_chat_history_v1";
 
-const STORAGE_KEY = "toolify_chat_history_v1";
+    let conversations = [];
+    let currentChatId = null;
 
-let conversations = [];
-let currentChatId = null;
-
-try {
-    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-    conversations = Array.isArray(saved) ? saved : [];
-} catch (error) {
-    conversations = [];
-}
-
-function saveHistory() {
     try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(conversations));
-    } catch (error) {
-        addChatMessage("Chat save nahi ho payi. Browser storage full ho sakta hai.", "bot");
-    }
-}
-
-function createNewChat() {
-    currentChatId = Date.now().toString();
-
-    conversations.push({
-        id: currentChatId,
-        title: "New Chat",
-        messages: [],
-        date: new Date().toLocaleString()
-    });
-
-    saveHistory();
-    renderMessages();
-}
-
-function getCurrentChat() {
-    return conversations.find(chat => chat.id === currentChatId);
-}
-
-function renderMessages() {
-    chatMessages.innerHTML = "";
-
-    const chat = getCurrentChat();
-
-    if (!chat || chat.messages.length === 0) {
-        addChatMessage(
-            "Hello! Welcome to Toolify Support. Aap kya jaanna chahte hain?",
-            "bot",
-            false
+        const saved = JSON.parse(
+            localStorage.getItem(STORAGE_KEY) || "[]"
         );
-        return;
+
+        conversations = Array.isArray(saved) ? saved : [];
+    } catch (error) {
+        conversations = [];
     }
 
-    chat.messages.forEach(message => {
-        addChatMessage(message.text, message.sender, false);
-    });
-
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-}
-
-function addChatMessage(message, sender, save = true) {
-    const messageDiv = document.createElement("div");
-
-    messageDiv.className =
-        sender === "user" ? "user-message" : "bot-message";
-
-    messageDiv.textContent = message;
-    chatMessages.appendChild(messageDiv);
-
-    if (save) {
-        const chat = getCurrentChat();
-
-        if (chat) {
-            chat.messages.push({
-                text: message,
-                sender: sender
-            });
-
-            if (sender === "user" && chat.title === "New Chat") {
-                chat.title = message.substring(0, 35);
-            }
-
-            saveHistory();
+    function saveHistory() {
+        try {
+            localStorage.setItem(
+                STORAGE_KEY,
+                JSON.stringify(conversations)
+            );
+        } catch (error) {
+            console.warn("Chat history could not be saved.");
         }
     }
 
-    chatMessages.scrollTop = chatMessages.scrollHeight;
-}
+    function createNewChat() {
+        currentChatId = Date.now().toString();
 
-function getFAQAnswer(question) {
-    const q = question.toLowerCase();
-
-    if (q.includes("hello") || q.includes("hi") || q.includes("hey")) {
-        return "Hello! Welcome to Toolify Support. Aapko kis tool mein help chahiye?";
-    }
-
-    if (q.includes("pdf") && (q.includes("jpg") || q.includes("image"))) {
-        return "PDF to JPG tool open karein, PDF upload karein aur Convert button par click karein.";
-    }
-
-    if (q.includes("convert") || q.includes("conversion")) {
-        return "Toolify homepage par apna required conversion tool select karein. File upload karke Convert button par click karein.";
-    }
-
-    if (q.includes("background")) {
-        return "Background Remover tool open karein, image upload karein, background color select karein aur Remove Background button par click karein.";
-    }
-
-    if (q.includes("watermark")) {
-        return "Watermark Remover tool ko open karke available instructions follow karein. Sirf un images par use karein jinhe edit karne ka aapko adhikar hai.";
-    }
-
-    if (q.includes("account") || q.includes("register") || q.includes("signup")) {
-        return "Toolify ke Register page par jaakar apni details fill karein aur account create karein.";
-    }
-
-    if (q.includes("login") || q.includes("password")) {
-        return "Login page par apna registered email aur password enter karein. Password kisi ke saath share na karein.";
-    }
-
-    if (q.includes("profile")) {
-        return "Login karne ke baad Profile section open karein.";
-    }
-
-    if (q.includes("feedback") || q.includes("review")) {
-        return "Homepage par Share Your Feedback section mein rating select karein. Comment optional hai. Phir Submit Feedback click karein.";
-    }
-
-    if (q.includes("free") || q.includes("price") || q.includes("cost")) {
-        return "Toolify ka purpose free online tools provide karna hai. Kisi specific feature ki availability website par check karein.";
-    }
-
-    if (q.includes("contact") || q.includes("support") || q.includes("help")) {
-        return "Aap apna question yahin type kar sakte hain. Agar answer available nahi hai, toh website owner se contact karein.";
-    }
-
-    if (q.includes("thank")) {
-        return "You're welcome! Toolify use karne ke liye thank you.";
-    }
-
-    return "Sorry, mujhe is question ka answer abhi nahi pata. Kripya apna question alag tarike se poochhein ya Toolify website owner se contact karein.";
-}
-
-function sendChatMessage(question) {
-    const cleanQuestion = question.trim();
-
-    if (!cleanQuestion || cleanQuestion.length > 300) return;
-
-    if (!getCurrentChat()) {
-        createNewChat();
-    }
-
-    addChatMessage(cleanQuestion, "user");
-
-    const answer = getFAQAnswer(cleanQuestion);
-
-    setTimeout(() => {
-        if (getCurrentChat()) {
-            addChatMessage(answer, "bot");
-        }
-    }, 400);
-}
-
-function showHistory() {
-    chatMessages.style.display = "none";
-    document.querySelector(".chat-questions").style.display = "none";
-    chatForm.style.display = "none";
-
-    chatHistoryPanel.style.display = "block";
-    chatHistoryList.innerHTML = "";
-
-    if (conversations.length === 0) {
-        chatHistoryList.innerHTML =
-            '<div class="history-empty">No previous chats found.</div>';
-    }
-
-    [...conversations].reverse().forEach(chat => {
-        const item = document.createElement("div");
-        item.className = "history-item";
-
-        const title = document.createElement("p");
-        title.textContent = chat.title + " • " + chat.date;
-
-        const openButton = document.createElement("button");
-        openButton.textContent = "Open";
-        openButton.addEventListener("click", () => {
-            currentChatId = chat.id;
-            showChat();
-            renderMessages();
+        conversations.push({
+            id: currentChatId,
+            title: "New Chat",
+            messages: [],
+            date: new Date().toLocaleString()
         });
 
-        const deleteButton = document.createElement("button");
-        deleteButton.textContent = "Delete";
-        deleteButton.className = "delete-history";
-
-        deleteButton.addEventListener("click", () => {
-            if (!confirm("Delete this conversation permanently?")) return;
-
-            conversations = conversations.filter(c => c.id !== chat.id);
-
-            if (currentChatId === chat.id) {
-                currentChatId = null;
-            }
-
-            saveHistory();
-            showHistory();
-        });
-
-        item.appendChild(title);
-        item.appendChild(openButton);
-        item.appendChild(deleteButton);
-        chatHistoryList.appendChild(item);
-    });
-}
-
-function showChat() {
-    chatHistoryPanel.style.display = "none";
-    chatMessages.style.display = "block";
-    document.querySelector(".chat-questions").style.display = "flex";
-    chatForm.style.display = "flex";
-}
-
-chatToggle.addEventListener("click", () => {
-    chatWindow.style.display = "block";
-    chatToggle.style.display = "none";
-
-    if (!currentChatId || !getCurrentChat()) {
-        createNewChat();
-    }
-});
-
-chatClose.addEventListener("click", () => {
-    chatWindow.style.display = "none";
-    chatToggle.style.display = "block";
-});
-
-chatHistory.addEventListener("click", showHistory);
-
-backToChat.addEventListener("click", () => {
-    showChat();
-
-    if (!getCurrentChat()) {
-        createNewChat();
-    } else {
+        saveHistory();
         renderMessages();
     }
-});
 
-clearChat.addEventListener("click", () => {
-    if (!confirm("Clear this current chat?")) return;
+    function getCurrentChat() {
+        return conversations.find(
+            chat => chat.id === currentChatId
+        );
+    }
 
-    conversations = conversations.filter(
-        chat => chat.id !== currentChatId
-    );
+    function addChatMessage(message, sender, save = true) {
+        const messageDiv = document.createElement("div");
 
-    currentChatId = null;
-    saveHistory();
-    createNewChat();
-});
+        messageDiv.className =
+            sender === "user" ? "user-message" : "bot-message";
 
-chatForm.addEventListener("submit", event => {
-    event.preventDefault();
+        messageDiv.textContent = message;
+        chatMessages.appendChild(messageDiv);
 
-    const question = chatInput.value.trim();
+        if (save) {
+            const chat = getCurrentChat();
 
-    if (!question || question.length > 300) return;
+            if (chat) {
+                chat.messages.push({
+                    text: message,
+                    sender: sender
+                });
 
-    sendChatMessage(question);
-    chatInput.value = "";
-});
+                if (
+                    sender === "user" &&
+                    chat.title === "New Chat"
+                ) {
+                    chat.title = message.substring(0, 35);
+                }
 
-document.querySelectorAll(".chat-questions button").forEach(button => {
-    button.addEventListener("click", () => {
-        sendChatMessage(button.dataset.question);
+                saveHistory();
+            }
+        }
+
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function renderMessages() {
+        chatMessages.innerHTML = "";
+
+        const chat = getCurrentChat();
+
+        if (!chat || chat.messages.length === 0) {
+            addChatMessage(
+                "Hello! Welcome to Toolify Support. Aap kya jaanna chahte hain?",
+                "bot",
+                false
+            );
+            return;
+        }
+
+        chat.messages.forEach(message => {
+            addChatMessage(message.text, message.sender, false);
+        });
+
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    function getFAQAnswer(question) {
+        const q = question.toLowerCase();
+
+        if (
+            q.includes("hello") ||
+            q.includes("hi") ||
+            q.includes("hey")
+        ) {
+            return "Hello! Welcome to Toolify Support. Aapko kis tool mein help chahiye?";
+        }
+
+        if (
+            q.includes("pdf") &&
+            (q.includes("jpg") || q.includes("image"))
+        ) {
+            return "PDF to JPG tool open karein, PDF upload karein aur Convert button par click karein.";
+        }
+
+        if (
+            q.includes("convert") ||
+            q.includes("conversion")
+        ) {
+            return "Toolify homepage par apna required conversion tool select karein. File upload karke Convert button par click karein.";
+        }
+
+        if (q.includes("background")) {
+            return "Background Remover tool open karein, image upload karein, background color select karein aur Remove Background button par click karein.";
+        }
+
+        if (q.includes("watermark")) {
+            return "Watermark Remover tool ko open karke available instructions follow karein. Sirf un images par use karein jinhe edit karne ka aapko adhikar hai.";
+        }
+
+        if (
+            q.includes("account") ||
+            q.includes("register") ||
+            q.includes("signup")
+        ) {
+            return "Toolify ke Register page par jaakar apni details fill karein aur account create karein.";
+        }
+
+        if (
+            q.includes("login") ||
+            q.includes("password")
+        ) {
+            return "Login page par apna registered email aur password enter karein. Password kisi ke saath share na karein.";
+        }
+
+        if (q.includes("profile")) {
+            return "Login karne ke baad Profile section open karein.";
+        }
+
+        if (
+            q.includes("feedback") ||
+            q.includes("review")
+        ) {
+            return "Homepage par Share Your Feedback section mein rating select karein. Comment optional hai. Phir Submit Feedback click karein.";
+        }
+
+        if (
+            q.includes("premium") ||
+            q.includes("tip") ||
+            q.includes("price") ||
+            q.includes("cost") ||
+            q.includes("free")
+        ) {
+            return "Toolify ke Premium plans aur optional tip section homepage par available hain. Payment verification abhi enabled nahi hai.";
+        }
+
+        if (
+            q.includes("contact") ||
+            q.includes("support") ||
+            q.includes("help")
+        ) {
+            return "Aap apna question yahin type kar sakte hain. Agar answer available nahi hai, toh Toolify website owner se contact karein.";
+        }
+
+        if (q.includes("thank")) {
+            return "You're welcome! Toolify use karne ke liye thank you.";
+        }
+
+        return "Sorry, mujhe is question ka answer abhi nahi pata. Kripya apna question alag tarike se poochhein ya Toolify website owner se contact karein.";
+    }
+
+    function sendChatMessage(question) {
+        const cleanQuestion = question.trim();
+
+        if (!cleanQuestion || cleanQuestion.length > 300) return;
+
+        if (!getCurrentChat()) {
+            createNewChat();
+        }
+
+        addChatMessage(cleanQuestion, "user");
+
+        const answer = getFAQAnswer(cleanQuestion);
+
+        window.setTimeout(() => {
+            if (getCurrentChat()) {
+                addChatMessage(answer, "bot");
+            }
+        }, 400);
+    }
+
+    function showHistory() {
+        chatMessages.style.display = "none";
+        document.querySelector(".chat-questions").style.display = "none";
+        chatForm.style.display = "none";
+
+        chatHistoryPanel.style.display = "block";
+        chatHistoryList.innerHTML = "";
+
+        if (conversations.length === 0) {
+            const empty = document.createElement("div");
+            empty.className = "history-empty";
+            empty.textContent = "No previous chats found.";
+            chatHistoryList.appendChild(empty);
+        }
+
+        [...conversations].reverse().forEach(chat => {
+            const item = document.createElement("div");
+            item.className = "history-item";
+
+            const title = document.createElement("p");
+            title.textContent = chat.title + " • " + chat.date;
+
+            const openButton = document.createElement("button");
+            openButton.textContent = "Open";
+
+            openButton.addEventListener("click", () => {
+                currentChatId = chat.id;
+                showChat();
+                renderMessages();
+            });
+
+            const deleteButton = document.createElement("button");
+            deleteButton.textContent = "Delete";
+            deleteButton.className = "delete-history";
+
+            deleteButton.addEventListener("click", () => {
+                if (!confirm("Delete this conversation permanently?")) {
+                    return;
+                }
+
+                conversations = conversations.filter(
+                    c => c.id !== chat.id
+                );
+
+                if (currentChatId === chat.id) {
+                    currentChatId = null;
+                }
+
+                saveHistory();
+                showHistory();
+            });
+
+            item.appendChild(title);
+            item.appendChild(openButton);
+            item.appendChild(deleteButton);
+
+            chatHistoryList.appendChild(item);
+        });
+    }
+
+    function showChat() {
+        chatHistoryPanel.style.display = "none";
+        chatMessages.style.display = "block";
+        document.querySelector(".chat-questions").style.display = "flex";
+        chatForm.style.display = "flex";
+    }
+
+    chatToggle.addEventListener("click", () => {
+        chatWindow.style.display = "flex";
+        chatToggle.style.display = "none";
+
+        if (!currentChatId || !getCurrentChat()) {
+            createNewChat();
+        }
     });
-});
 
- 
-// Toolify Premium Payment Popup
+    chatClose.addEventListener("click", () => {
+        chatWindow.style.display = "none";
+        chatToggle.style.display = "block";
+    });
 
-const paymentModal = document.getElementById("paymentModal");
-const selectedPlan = document.getElementById("selectedPlan");
-const selectedAmount = document.getElementById("selectedAmount");
-const paymentQR = document.getElementById("paymentQR");
-const qrPayment = document.getElementById("qrPayment");
-const paymentTimer = document.getElementById("paymentTimer");
-const timerMessage = document.getElementById("timerMessage");
+    chatHistoryButton.addEventListener("click", showHistory);
 
-let paymentCountdown = null;
-let remainingSeconds = 300;
+    backToChat.addEventListener("click", () => {
+        showChat();
 
-const premiumQRImages = {
-    "99": "{{ url_for('static', filename='qr/99.jpeg') }}",
-    "199": "{{ url_for('static', filename='qr/199.jpeg') }}",
-    "599": "{{ url_for('static', filename='qr/599.jpeg') }}"
-};
+        if (!getCurrentChat()) {
+            createNewChat();
+        } else {
+            renderMessages();
+        }
+    });
 
-document.querySelectorAll(".premium-buy").forEach(button => {
-    button.addEventListener("click", () => {
-        const plan = button.dataset.plan;
-        const amount = button.dataset.amount;
+    clearChat.addEventListener("click", () => {
+        if (!confirm("Clear this current chat?")) return;
+
+        conversations = conversations.filter(
+            chat => chat.id !== currentChatId
+        );
+
+        currentChatId = null;
+        saveHistory();
+        createNewChat();
+    });
+
+    chatForm.addEventListener("submit", event => {
+        event.preventDefault();
+
+        const question = chatInput.value.trim();
+
+        if (!question || question.length > 300) return;
+
+        sendChatMessage(question);
+        chatInput.value = "";
+    });
+
+    document.querySelectorAll(".chat-questions button").forEach(button => {
+        button.addEventListener("click", () => {
+            sendChatMessage(button.dataset.question);
+        });
+    });
+
+    /* Premium Payment Popup */
+
+    const paymentModal = document.getElementById("paymentModal");
+    const selectedPlan = document.getElementById("selectedPlan");
+    const selectedAmount = document.getElementById("selectedAmount");
+    const paymentQR = document.getElementById("paymentQR");
+    const qrPayment = document.getElementById("qrPayment");
+    const paymentTimer = document.getElementById("paymentTimer");
+    const timerMessage = document.getElementById("timerMessage");
+    const upiOption = document.getElementById("upiOption");
+
+    let paymentCountdown = null;
+    let remainingSeconds = 300;
+
+    const premiumQRImages = {
+        "99": "{{ url_for('static', filename='qr/99.jpeg') }}",
+        "199": "{{ url_for('static', filename='qr/199.jpeg') }}",
+        "599": "{{ url_for('static', filename='qr/599.jpeg') }}"
+    };
+
+    function stopPaymentTimer() {
+        if (paymentCountdown) {
+            clearInterval(paymentCountdown);
+            paymentCountdown = null;
+        }
+    }
+
+    function closePaymentModal() {
+        stopPaymentTimer();
+
+        paymentModal.style.display = "none";
+        qrPayment.style.display = "none";
+        paymentQR.style.display = "block";
+        upiOption.style.display = "block";
+    }
+
+    function openPaymentModal(plan, amount) {
+        stopPaymentTimer();
 
         selectedPlan.textContent = plan + " Premium Plan";
         selectedAmount.textContent = "₹" + amount;
 
-        paymentQR.src = premiumQRImages[amount];
+        paymentQR.src = premiumQRImages[amount] || "";
+
+        remainingSeconds = 300;
+        paymentTimer.textContent = "05:00";
 
         qrPayment.style.display = "none";
-        document.getElementById("upiOption").style.display = "block";
+        upiOption.style.display = "block";
 
         paymentModal.style.display = "flex";
+    }
+
+    document.querySelectorAll(".premium-buy").forEach(button => {
+        button.addEventListener("click", () => {
+            openPaymentModal(
+                button.dataset.plan,
+                button.dataset.amount
+            );
+        });
     });
-});
 
-document.getElementById("upiOption").addEventListener("click", () => {
-    clearInterval(paymentCountdown);
+    upiOption.addEventListener("click", () => {
+        stopPaymentTimer();
 
-    remainingSeconds = 300;
+        remainingSeconds = 300;
+        qrPayment.style.display = "block";
+        upiOption.style.display = "none";
 
-    qrPayment.style.display = "block";
-    document.getElementById("upiOption").style.display = "none";
+        timerMessage.textContent =
+            "Complete payment within 5 minutes.";
 
-    timerMessage.textContent = "Complete payment within 5 minutes.";
+        function updatePaymentTimer() {
+            const minutes = Math.floor(remainingSeconds / 60);
+            const seconds = remainingSeconds % 60;
 
-    function updatePaymentTimer() {
-        const minutes = Math.floor(remainingSeconds / 60);
-        const seconds = remainingSeconds % 60;
+            paymentTimer.textContent =
+                String(minutes).padStart(2, "0") + ":" +
+                String(seconds).padStart(2, "0");
 
-        paymentTimer.textContent =
-            String(minutes).padStart(2, "0") + ":" +
-            String(seconds).padStart(2, "0");
+            if (remainingSeconds <= 0) {
+                stopPaymentTimer();
 
-        if (remainingSeconds <= 0) {
-            clearInterval(paymentCountdown);
-            paymentCountdown = null;
+                paymentQR.style.display = "none";
 
-            paymentQR.style.display = "none";
-            timerMessage.textContent =
-                "Time expired. Close this window and start again.";
+                timerMessage.textContent =
+                    "Time expired. Close this window and start again.";
 
+                return;
+            }
+
+            remainingSeconds--;
+        }
+
+        updatePaymentTimer();
+        paymentCountdown = setInterval(updatePaymentTimer, 1000);
+    });
+
+    document.getElementById("closePayment").addEventListener(
+        "click",
+        closePaymentModal
+    );
+
+    paymentModal.addEventListener("click", event => {
+        if (event.target === paymentModal) {
+            closePaymentModal();
+        }
+    });
+
+    /* Tip Section */
+
+    const acceptTipTerms = document.getElementById("acceptTipTerms");
+    const giveTipBtn = document.getElementById("giveTipBtn");
+    const tipOptions = document.getElementById("tipOptions");
+    const tipAmount = document.getElementById("tipAmount");
+    const payTipBtn = document.getElementById("payTipBtn");
+    const tipQR = document.getElementById("tipQR");
+    const tipQRAmount = document.getElementById("tipQRAmount");
+    const tipChoiceButtons = document.querySelectorAll(".tip-choice");
+
+    let selectedTip = 0;
+
+    acceptTipTerms.addEventListener("change", () => {
+        giveTipBtn.disabled = !acceptTipTerms.checked;
+
+        if (!acceptTipTerms.checked) {
+            tipOptions.style.display = "none";
+            tipQR.style.display = "none";
+            payTipBtn.disabled = true;
+        }
+    });
+
+    giveTipBtn.addEventListener("click", () => {
+        if (!acceptTipTerms.checked) return;
+
+        tipOptions.style.display = "block";
+        giveTipBtn.textContent = "✓ Tip Options Open";
+    });
+
+    function validateTipAmount() {
+        const amount = Number(tipAmount.value);
+
+        const valid =
+            Number.isInteger(amount) &&
+            amount >= 1 &&
+            amount <= 100000;
+
+        payTipBtn.disabled = !valid;
+
+        if (valid) {
+            selectedTip = amount;
+            tipChoiceButtons.forEach(button =>
+                button.classList.remove("active")
+            );
+        }
+
+        tipQR.style.display = "none";
+    }
+
+    tipChoiceButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            const amount = Number(button.dataset.amount);
+
+            selectedTip = amount;
+            tipAmount.value = amount;
+
+            tipChoiceButtons.forEach(item =>
+                item.classList.remove("active")
+            );
+
+            button.classList.add("active");
+
+            payTipBtn.disabled = false;
+            tipQR.style.display = "none";
+        });
+    });
+
+    tipAmount.addEventListener("input", validateTipAmount);
+
+    payTipBtn.addEventListener("click", () => {
+        if (!acceptTipTerms.checked) return;
+
+        const amount = Number(tipAmount.value);
+
+        if (
+            !Number.isInteger(amount) ||
+            amount < 1 ||
+            amount > 100000
+        ) {
+            alert("Please enter a valid tip amount.");
             return;
         }
 
-        remainingSeconds--;
+        selectedTip = amount;
+
+        tipQRAmount.textContent =
+            "Your selected tip: ₹" + selectedTip;
+
+        tipQR.style.display = "block";
+
+        tipQR.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest"
+        });
+    });
+
+    /* Welcome Popup */
+
+    const welcomeModal = document.getElementById("welcomeModal");
+    const closeWelcome = document.getElementById("closeWelcome");
+
+    const queryParams = new URLSearchParams(window.location.search);
+
+    if (queryParams.get("welcome") === "1") {
+        welcomeModal.style.display = "flex";
     }
 
-    updatePaymentTimer();
-    paymentCountdown = setInterval(updatePaymentTimer, 1000);
-});
+    closeWelcome.addEventListener("click", () => {
+        welcomeModal.style.display = "none";
+    });
 
-document.getElementById("closePayment").addEventListener("click", () => {
-    clearInterval(paymentCountdown);
-    paymentCountdown = null;
+    welcomeModal.addEventListener("click", event => {
+        if (event.target === welcomeModal) {
+            welcomeModal.style.display = "none";
+        }
+    });
 
-    paymentModal.style.display = "none";
-    qrPayment.style.display = "none";
-    paymentQR.style.display = "block";
-    document.getElementById("upiOption").style.display = "block";
-});
+    document.getElementById("welcomePremium").addEventListener("click", () => {
+        welcomeModal.style.display = "none";
 
-paymentModal.addEventListener("click", event => {
-    if (event.target === paymentModal) {
-        document.getElementById("closePayment").click();
-    }
+        document.getElementById("premium").scrollIntoView({
+            behavior: "smooth"
+        });
+    });
+
+    document.getElementById("welcomeTip").addEventListener("click", () => {
+        welcomeModal.style.display = "none";
+
+        document.getElementById("tip-card").scrollIntoView({
+            behavior: "smooth"
+        });
+    });
+
 });
-   
 </script>
 
 </body>
