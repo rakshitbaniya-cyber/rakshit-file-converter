@@ -467,34 +467,6 @@ def submit_feedback():
         success=True,
         message="Thank you! Your feedback has been submitted and is awaiting admin approval."
     )
-def submit_feedback():
-    rating_value = request.form.get("rating", "").strip()
-    comment = request.form.get("comment", "").strip()
-
-    try:
-        rating = int(rating_value)
-    except (ValueError, TypeError):
-        return jsonify(error="Please select a rating."), 400
-
-    if rating < 1 or rating > 5:
-        return jsonify(error="Rating must be between 1 and 5."), 400
-
-    if len(comment) > 2000:
-        return jsonify(error="Comment must be 2000 characters or less."), 400
-
-    user_id = session.get("user_id")
-
-    with db() as con:
-        con.execute("""
-            INSERT INTO feedback(user_id, rating, comment, status)
-            VALUES(?, ?, ?, 'pending')
-        """, (user_id, rating, comment or None))
-
-    return jsonify(
-        success=True,
-        message="Thank you! Your feedback has been submitted and is awaiting admin approval."
-    )
-
 @app.route("/admin/feedback")
 @login_required
 @admin_required
