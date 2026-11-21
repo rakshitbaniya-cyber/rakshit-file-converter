@@ -746,6 +746,32 @@
         <p>Try another search keyword.</p>
     </div>
 
+<!-- Public User Reviews -->
+<section class="public-reviews" id="user-reviews">
+    <h2>What Our Users Say</h2>
+    <p>Real feedback from Toolify users.</p>
+
+    {% for review in approved_feedback %}
+        <div class="review-card">
+
+            <div class="review-header">
+                <strong>Toolify User</strong>
+
+                <span class="review-stars">
+                    {% for star in range(review.rating) %}★{% endfor %}{% for star in range(5 - review.rating) %}☆{% endfor %}
+                </span>
+            </div>
+
+            <p>{{ review.comment or "Rated Toolify without a comment." }}</p>
+
+            <small>{{ review.created_at }}</small>
+
+        </div>
+    {% else %}
+        <p>No approved reviews yet. Be the first to share your experience!</p>
+    {% endfor %}
+</section>
+
 <!-- Feedback Section -->
 <section class="feedback-section" id="feedback">
     <h2>Share Your Feedback</h2>
