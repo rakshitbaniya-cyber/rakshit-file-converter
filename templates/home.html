@@ -1025,83 +1025,270 @@
 </div>
 
 <!-- Toolify Premium Membership -->
-<section id="premium" style="padding:50px 20px; text-align:center;">
-    <h2>Toolify Premium</h2>
-    <p>Choose your plan and enjoy Premium features.</p>
+<section id="premium">
+    <div class="premium-heading">
+        <h2>Join Toolify Premium</h2>
+        <p>Choose a plan that works best for you.</p>
+    </div>
 
     <div class="premium-plans">
+
+        <div class="premium-card">
+            <h3>Free</h3>
+            <h2>₹0</h2>
+            <p>Basic Toolify features</p>
+            <button type="button" class="free-plan" disabled>
+                Current Plan
+            </button>
+        </div>
 
         <div class="premium-card">
             <h3>Monthly</h3>
             <h2>₹99</h2>
             <p>1 Month Access</p>
-            <img src="{{ url_for('static', filename='qr/99.jpeg') }}" alt="Monthly payment QR">
+            <button type="button" class="premium-buy"
+                data-plan="Monthly" data-amount="99">
+                Get Premium
+            </button>
         </div>
 
         <div class="premium-card">
             <h3>3 Months</h3>
             <h2>₹199</h2>
             <p>3 Months Access</p>
-            <img src="{{ url_for('static', filename='qr/199.jpeg') }}" alt="3 month payment QR">
+            <button type="button" class="premium-buy"
+                data-plan="3 Months" data-amount="199">
+                Get Premium
+            </button>
         </div>
 
         <div class="premium-card">
             <h3>Yearly</h3>
             <h2>₹599</h2>
             <p>12 Months Access</p>
-            <img src="{{ url_for('static', filename='qr/599.jpeg') }}" alt="Yearly payment QR">
+            <button type="button" class="premium-buy"
+                data-plan="Yearly" data-amount="599">
+                Get Premium
+            </button>
         </div>
 
     </div>
 
+    <!-- Payment Popup -->
+    <div id="paymentModal" class="payment-modal">
+        <div class="payment-box">
+
+            <button type="button" id="closePayment"
+                class="payment-close">×</button>
+
+            <h2>Complete Your Payment</h2>
+
+            <p id="selectedPlan"></p>
+            <h2 id="selectedAmount"></h2>
+
+            <h3>Select Payment Mode</h3>
+
+            <button type="button" id="upiOption"
+                class="payment-option">
+                📱 UPI QR Payment
+            </button>
+
+            <div id="qrPayment" style="display:none;">
+                <h3>Scan QR using your UPI app</h3>
+
+                <img id="paymentQR" src=""
+                    alt="Payment QR Code">
+
+                <h2 id="paymentTimer">05:00</h2>
+
+                <p id="timerMessage">
+                    Complete payment within 5 minutes.
+                </p>
+            </div>
+
+            <p class="payment-note">
+                Payment verification is not enabled yet.
+                Do not assume membership is activated until payment
+                is verified.
+            </p>
+
+        </div>
+    </div>
+
+    <!-- Optional Tips -->
     <div class="tip-card">
         <h3>❤️ Support Toolify</h3>
         <p>Give an optional tip of your choice.</p>
 
         <input type="number" id="tipAmount"
-               min="1" step="1"
-               placeholder="Enter tip amount (₹)">
+            min="1" step="1"
+            placeholder="Enter tip amount (₹)">
 
-        <div>
-            <img src="{{ url_for('static', filename='qr/Custom.jpeg') }}"
-                 alt="Custom tip payment QR">
-        </div>
+        <img src="{{ url_for('static', filename='qr/Custom.jpeg') }}"
+            alt="Custom tip payment QR">
 
         <small>Tips are non-refundable, except where required by applicable law or payment rules.</small>
     </div>
 
-    <p>Premium refund requests: within 7 days, subject to the disclosed refund terms and applicable rules.</p>
-    <p>Demo payment display only. Payment verification and membership activation are not yet enabled.</p>
+    <p>Refund requests: within 7 days, subject to applicable terms and rules.</p>
 </section>
 
 <style>
+#premium {
+    padding: 55px 20px;
+    text-align: center;
+    background: #f4f7fc;
+}
+
+.premium-heading h2 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.premium-heading p {
+    color: #68758a;
+}
+
 .premium-plans {
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-    gap:20px;
+    max-width: 1150px;
+    margin: 45px auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
 }
-.premium-card, .tip-card {
-    background:var(--card-bg, #fff);
-    color:var(--text-color, #222);
-    border:1px solid #ddd;
-    border-radius:14px;
-    padding:20px;
-    width:230px;
-    margin:10px;
+
+.premium-card {
+    background: white;
+    border-radius: 22px;
+    padding: 25px 18px;
+    box-shadow: 0 5px 22px #00000010;
+    border: 1px solid #e7ebf2;
 }
-.premium-card img, .tip-card img {
-    width:180px;
-    max-width:100%;
-    height:auto;
-    margin-top:12px;
+
+.premium-card h3 {
+    font-size: 21px;
 }
+
+.premium-card h2 {
+    font-size: 32px;
+    margin: 18px 0;
+}
+
+.premium-card p {
+    color: #68758a;
+}
+
+.premium-buy,
+.free-plan {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 25px;
+    background: #315de8;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.premium-buy:hover {
+    background: #244bc2;
+}
+
+.free-plan {
+    background: #dce8ff;
+    color: #315de8;
+    cursor: default;
+}
+
+.payment-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: #00000080;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+}
+
+.payment-box {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    max-height: 90vh;
+    overflow-y: auto;
+    background: white;
+    border-radius: 18px;
+    padding: 28px 22px;
+    text-align: center;
+}
+
+.payment-close {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    border: none;
+    background: none;
+    font-size: 30px;
+    cursor: pointer;
+}
+
+.payment-option {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #d5dce8;
+    border-radius: 10px;
+    background: #f4f7fc;
+    color: #172033;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#paymentQR {
+    display: block;
+    width: 210px;
+    max-width: 100%;
+    margin: 15px auto;
+}
+
+#paymentTimer {
+    color: #315de8;
+    font-size: 30px;
+}
+
+.payment-note {
+    color: #68758a;
+    font-size: 12px;
+    line-height: 1.5;
+    margin-top: 20px;
+}
+
+.tip-card {
+    max-width: 350px;
+    margin: 35px auto;
+    padding: 22px;
+    background: white;
+    border-radius: 16px;
+}
+
 .tip-card input {
-    width:90%;
-    padding:10px;
-    margin:12px 0;
-    border:1px solid #ccc;
-    border-radius:8px;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin: 12px 0;
+}
+
+.tip-card img {
+    width: 180px;
+    max-width: 100%;
+}
+
+@media(max-width: 600px) {
+    .premium-heading h2 {
+        font-size: 28px;
+    }
 }
 </style>
 
@@ -1552,7 +1739,95 @@ document.querySelectorAll(".chat-questions button").forEach(button => {
     });
 });
 
-    
+ 
+// Toolify Premium Payment Popup
+
+const paymentModal = document.getElementById("paymentModal");
+const selectedPlan = document.getElementById("selectedPlan");
+const selectedAmount = document.getElementById("selectedAmount");
+const paymentQR = document.getElementById("paymentQR");
+const qrPayment = document.getElementById("qrPayment");
+const paymentTimer = document.getElementById("paymentTimer");
+const timerMessage = document.getElementById("timerMessage");
+
+let paymentCountdown = null;
+let remainingSeconds = 300;
+
+const premiumQRImages = {
+    "99": "{{ url_for('static', filename='qr/99.jpeg') }}",
+    "199": "{{ url_for('static', filename='qr/199.jpeg') }}",
+    "599": "{{ url_for('static', filename='qr/599.jpeg') }}"
+};
+
+document.querySelectorAll(".premium-buy").forEach(button => {
+    button.addEventListener("click", () => {
+        const plan = button.dataset.plan;
+        const amount = button.dataset.amount;
+
+        selectedPlan.textContent = plan + " Premium Plan";
+        selectedAmount.textContent = "₹" + amount;
+
+        paymentQR.src = premiumQRImages[amount];
+
+        qrPayment.style.display = "none";
+        document.getElementById("upiOption").style.display = "block";
+
+        paymentModal.style.display = "flex";
+    });
+});
+
+document.getElementById("upiOption").addEventListener("click", () => {
+    clearInterval(paymentCountdown);
+
+    remainingSeconds = 300;
+
+    qrPayment.style.display = "block";
+    document.getElementById("upiOption").style.display = "none";
+
+    timerMessage.textContent = "Complete payment within 5 minutes.";
+
+    function updatePaymentTimer() {
+        const minutes = Math.floor(remainingSeconds / 60);
+        const seconds = remainingSeconds % 60;
+
+        paymentTimer.textContent =
+            String(minutes).padStart(2, "0") + ":" +
+            String(seconds).padStart(2, "0");
+
+        if (remainingSeconds <= 0) {
+            clearInterval(paymentCountdown);
+            paymentCountdown = null;
+
+            paymentQR.style.display = "none";
+            timerMessage.textContent =
+                "Time expired. Close this window and start again.";
+
+            return;
+        }
+
+        remainingSeconds--;
+    }
+
+    updatePaymentTimer();
+    paymentCountdown = setInterval(updatePaymentTimer, 1000);
+});
+
+document.getElementById("closePayment").addEventListener("click", () => {
+    clearInterval(paymentCountdown);
+    paymentCountdown = null;
+
+    paymentModal.style.display = "none";
+    qrPayment.style.display = "none";
+    paymentQR.style.display = "block";
+    document.getElementById("upiOption").style.display = "block";
+});
+
+paymentModal.addEventListener("click", event => {
+    if (event.target === paymentModal) {
+        document.getElementById("closePayment").click();
+    }
+});
+   
 </script>
 
 </body>
