@@ -131,6 +131,14 @@ def init_db():
         for column, sql in migrations.items():
             if column not in existing:
                 con.execute(sql)
+                        # Activate the configured Toolify admin
+        admin_email = os.environ.get("ADMIN_EMAIL", "").strip().lower()
+
+        if admin_email:
+            con.execute(
+                "UPDATE users SET role = 'admin' WHERE email = ?",
+                (admin_email,)
+            )
         # Create feedback table.
         con.execute("""
             CREATE TABLE IF NOT EXISTS feedback (
