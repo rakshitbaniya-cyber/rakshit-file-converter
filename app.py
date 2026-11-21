@@ -252,9 +252,25 @@ def common():
 
 # ---------------- HOME AND TOOL PAGES ----------------
 
+
 @app.route("/")
 def home():
-    return render_template("home.html", tools=TOOLS)
+    with db() as con:
+        approved_feedback = con.execute("""
+            SELECT feedback.rating, feedback.comment,
+                   feedback.created_at, users.email
+            FROM feedback
+            LEFT JOIN users ON feedback.user_id = users.id
+            WHERE feedback.status = 'approved'
+            ORDER BY feedback.created_at DESC
+        """).fetchall()
+
+    return render_template(
+        "home.html",
+        tools=TOOLS,
+        approved_feedback=approved_feedback
+    )
+
 
 
 @app.route("/tools/<slug>")
