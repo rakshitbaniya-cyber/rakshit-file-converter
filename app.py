@@ -334,7 +334,6 @@ def tool_page(slug):
 def settings():
     return render_template("settings.html")
 
-
 # ---------------- REGISTRATION ----------------
 
 @app.route("/register", methods=["GET", "POST"])
@@ -352,23 +351,26 @@ def register():
                         "INSERT INTO users(email,password_hash) VALUES(?,?)",
                         (email, generate_password_hash(password))
                     )
-sync_to_google_sheet(
-    "Registration Details",
-    [
-        str(cur.lastrowid),
-        email,
-        "",
-        "",
-        "user",
-        "Active",
-        "",
-        "Website Registration"
-    ]
-)
-                    session.clear()
-                    session.permanent = True
-                    session["user_id"] = cur.lastrowid
-                    session["email"] = email
+                    user_id = cur.lastrowid
+
+                sync_to_google_sheet(
+                    "Registration Details",
+                    [
+                        str(user_id),
+                        email,
+                        "",
+                        "",
+                        "user",
+                        "Active",
+                        "",
+                        "Website Registration"
+                    ]
+                )
+
+                session.clear()
+                session.permanent = True
+                session["user_id"] = user_id
+                session["email"] = email
 
                 return redirect(url_for("home"))
 
@@ -376,7 +378,6 @@ sync_to_google_sheet(
                 flash("This email is already registered.")
 
     return render_template("auth.html", mode="Register")
-
 
 # ---------------- LOGIN ----------------
 
