@@ -127,11 +127,11 @@ def init_db():
             "premium_plan": "ALTER TABLE users ADD COLUMN premium_plan TEXT DEFAULT 'free'",
             "premium_expiry": "ALTER TABLE users ADD COLUMN premium_expiry TIMESTAMP"
         }
-
         for column, sql in migrations.items():
             if column not in existing:
                 con.execute(sql)
-                        # Activate the configured Toolify admin
+
+        # Activate the configured Toolify admin
         admin_email = os.environ.get("ADMIN_EMAIL", "").strip().lower()
 
         if admin_email:
