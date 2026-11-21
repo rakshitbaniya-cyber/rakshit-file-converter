@@ -166,23 +166,17 @@ def login_required(fn):
             return redirect(url_for("login"))
         return fn(*args, **kwargs)
     return wrapped
-
-
 def admin_required(fn):
     @wraps(fn)
     def wrapped(*args, **kwargs):
-        admin_email = os.environ.get("ADMIN_EMAIL", "").strip().lower()
+        user = current_user_record()
 
-        if not admin_email:
-            return "Admin access is not configured.", 403
-
-        if session.get("email", "").lower() != admin_email:
+        if not user or user["role"] != "admin":
             return "Access denied.", 403
 
         return fn(*args, **kwargs)
+
     return wrapped
-
-
 def get_pdf(data):
     doc = fitz.open(stream=data, filetype="pdf")
 
