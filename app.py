@@ -469,15 +469,16 @@ def admin_feedback():
     with db() as con:
         feedback_rows = con.execute("""
             SELECT feedback.id, feedback.rating, feedback.comment,
-                   feedback.created_at, users.email
+                   feedback.created_at, feedback.status, users.email
             FROM feedback
             LEFT JOIN users ON feedback.user_id = users.id
             ORDER BY feedback.created_at DESC
         """).fetchall()
 
-    return render_template("admin_feedback.html", feedback=feedback_rows)
-
-
+    return render_template(
+        "admin_feedback.html",
+        feedback=feedback_rows
+    )
 @app.route("/admin/feedback/export")
 @login_required
 @admin_required
