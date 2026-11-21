@@ -1115,20 +1115,50 @@
         </div>
     </div>
 
-    <!-- Optional Tips -->
-    <div class="tip-card">
-        <h3>❤️ Support Toolify</h3>
-        <p>Give an optional tip of your choice.</p>
+
+<!-- Optional Tips -->
+<div class="tip-card">
+    <h3>❤️ Support Toolify</h3>
+    <p>Support our platform with an optional tip.</p>
+
+    <div class="tip-terms">
+        <label>
+            <input type="checkbox" id="acceptTipTerms">
+            I accept the Terms & Conditions.
+        </label>
+    </div>
+
+    <button type="button" id="giveTipBtn" disabled>
+        ❤️ Give Tip
+    </button>
+
+    <div id="tipOptions" style="display:none;">
+        <h4>Select Tip Amount</h4>
+
+        <div class="tip-amounts">
+            <button type="button" class="tip-choice" data-amount="10">₹10</button>
+            <button type="button" class="tip-choice" data-amount="20">₹20</button>
+            <button type="button" class="tip-choice" data-amount="50">₹50</button>
+            <button type="button" class="tip-choice" data-amount="100">₹100</button>
+        </div>
 
         <input type="number" id="tipAmount"
             min="1" step="1"
-            placeholder="Enter tip amount (₹)">
+            placeholder="Enter custom amount (₹)">
 
-        <img src="{{ url_for('static', filename='qr/Custom.jpeg') }}"
-            alt="Custom tip payment QR">
+        <button type="button" id="payTipBtn" disabled>
+            Continue to Payment
+        </button>
 
-        <small>Tips are non-refundable, except where required by applicable law or payment rules.</small>
+        <div id="tipQR" style="display:none;">
+            <img src="{{ url_for('static', filename='qr/Custom.jpeg') }}"
+                alt="Toolify tip payment QR">
+            <p>Scan using your UPI app.</p>
+            <p id="tipQRAmount"></p>
+        </div>
     </div>
+</div>
+
 
     <p>Refund requests: within 7 days, subject to applicable terms and rules.</p>
 </section>
