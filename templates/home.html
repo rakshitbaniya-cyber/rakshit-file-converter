@@ -480,11 +480,19 @@
     color: #cbd5e8;
     margin-top: 5px;
 }
-
 #chatClose {
-    
-/* Chat History and Delete Options */
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 7px;
+    background: #26395f;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+    line-height: 1;
+}
 
+/* Chat History and Delete Options */
 .chat-header-actions {
     display: flex;
     align-items: center;
@@ -890,6 +898,18 @@
         <button id="clearChat" title="Clear Current Chat">🗑️</button>
         <button id="chatClose" aria-label="Close chatbot">×</button>
     </div>
+</div>
+<!-- Chat History Panel -->
+<div id="chatHistoryPanel" style="display: none;">
+
+    <h4>Previous Conversations</h4>
+
+    <div id="chatHistoryList"></div>
+
+    <button type="button" id="backToChat">
+        Back to Chat
+    </button>
+
 </div>
         <div id="chatMessages">
             <div class="bot-message">
