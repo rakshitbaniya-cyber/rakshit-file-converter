@@ -3,6 +3,8 @@ import os
 import io
 import re
 import sqlite3
+import json
+import urllib.request
 import secrets
 import zipfile
 import uuid
@@ -163,6 +165,46 @@ def init_db():
                 ADD COLUMN status TEXT NOT NULL DEFAULT 'pending'
             """)
 init_db()
+
+# ---------------- GOOGLE SHEETS SYNC ----------------
+
+def sync_to_google_sheet(sheet_name, values):
+    webhook_url = os.environ.get("TOOLIFY_SHEETS_WEBHOOK_URL")
+    sync_secret = os.environ.get("TOOLIFY_SYNC_SECRET")
+
+    if not webhook_url or not sync_secret:
+        app.logger.warning("Google Sheets sync is not configured.")
+        return False
+
+    payload = {
+        "secret": sync_secret,
+        "sheet": sheet_name,
+        "values": values
+    }
+
+    try:
+        data = json.dumps(payload).encode("utf-8")
+
+        req = urllib.request.Request(
+            webhook_url,
+            data=data,
+            headers={"Content-Type": "application/json"},
+            method="POST"
+        )
+
+        with urllib.request.urlopen(req, timeout=15) as response:
+            result = json.loads(response.read().decode("utf-8"))
+
+        if result.get("success") is True:
+            return True
+
+        app.logger.error("Google Sheets rejected a sync request.")
+        return False
+
+    except Exception:
+        app.logger.exception("Google Sheets sync failed.")
+        return False
+
 # ---------------- HELPERS ----------------
 
 def login_required(fn):
@@ -310,7 +352,19 @@ def register():
                         "INSERT INTO users(email,password_hash) VALUES(?,?)",
                         (email, generate_password_hash(password))
                     )
-
+sync_to_google_sheet(
+    "Registration Details",
+    [
+        str(cur.lastrowid),
+        email,
+        "",
+        "",
+        "user",
+        "Active",
+        "",
+        "Website Registration"
+    ]
+)
                     session.clear()
                     session.permanent = True
                     session["user_id"] = cur.lastrowid
@@ -465,13 +519,32 @@ def submit_feedback():
         return jsonify(error="Comment must be 2000 characters or less."), 400
 
     user_id = session.get("user_id")
+with db() as con:
+    cur = con.execute("""
+        INSERT INTO feedback(user_id, rating, comment, status)
+        VALUES(?, ?, ?, 'pending')
+    """, (user_id, rating, comment or None))
 
-    with db() as con:
-        con.execute("""
-            INSERT INTO feedback(user_id, rating, comment, status)
-            VALUES(?, ?, ?, 'pending')
-        """, (user_id, rating, comment or None))
+    feedback_id = cur.lastrowid
 
+    user = con.execute(
+        "SELECT email FROM users WHERE id = ?",
+        (user_id,)
+    ).fetchone() if user_id else None
+
+    sync_to_google_sheet(
+        "Feedback Details",
+        [
+            str(feedback_id),
+            str(user_id or ""),
+            user["email"] if user else "Guest",
+            str(rating),
+            comment or "",
+            "",
+            "Pending",
+            ""
+        ]
+    )
     return jsonify(
         success=True,
         message="Thank you! Your feedback has been submitted and is awaiting admin approval."
