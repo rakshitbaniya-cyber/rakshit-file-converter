@@ -177,8 +177,14 @@ def admin_required(fn):
     @wraps(fn)
     def wrapped(*args, **kwargs):
         user = current_user_record()
+        admin_email = os.environ.get(
+            "ADMIN_EMAIL", ""
+        ).strip().lower()
 
-        if not user or user["role"] != "admin":
+        if not user or not admin_email:
+            return "Access denied.", 403
+
+        if user["email"].strip().lower() != admin_email:
             return "Access denied.", 403
 
         return fn(*args, **kwargs)
