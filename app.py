@@ -461,11 +461,6 @@ def submit_feedback():
         message="Thank you! Your feedback has been submitted and is awaiting admin approval."
     )
 
-
-@app.route("/admin/feedback")
-@login_required
-@admin_required
-def admin_feedback():
 @app.route("/admin/feedback")
 @login_required
 @admin_required
@@ -496,6 +491,36 @@ def admin_feedback():
         "admin_feedback.html",
         feedback=feedback_rows
     )
+
+# Approve feedback
+@app.route("/admin/feedback/<int:feedback_id>/approve", methods=["POST"])
+@login_required
+@admin_required
+def approve_feedback(feedback_id):
+    with db() as con:
+        con.execute(
+            "UPDATE feedback SET status = 'approved' WHERE id = ?",
+            (feedback_id,)
+        )
+
+    flash("Feedback approved successfully.", "success")
+    return redirect(url_for("admin_feedback"))
+
+
+# Reject feedback
+@app.route("/admin/feedback/<int:feedback_id>/reject", methods=["POST"])
+@login_required
+@admin_required
+def reject_feedback(feedback_id):
+    with db() as con:
+        con.execute(
+            "UPDATE feedback SET status = 'rejected' WHERE id = ?",
+            (feedback_id,)
+        )
+
+    flash("Feedback rejected successfully.", "success")
+    return redirect(url_for("admin_feedback"))
+  
 @app.route("/admin/feedback/export")
 @login_required
 @admin_required
