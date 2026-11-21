@@ -662,6 +662,20 @@
     }
 }
 /* Toolify Chatbot Professional Improvements */
+.chat-status {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.online-dot {
+    width: 8px;
+    height: 8px;
+    display: inline-block;
+    background: #35d07f;
+    border-radius: 50%;
+    box-shadow: 0 0 7px #35d07f80;
+}
 
 #chatWindow {
     display: none;
@@ -952,7 +966,10 @@
 <div class="chat-header">
     <div>
         <strong>🛠️ Toolify Support</strong>
-        <small>FAQ Assistant • Online</small>
+        <small class="chat-status">
+    <span class="online-dot"></span>
+    FAQ Assistant • Online
+</small>
     </div>
 
     <div class="chat-header-actions">
