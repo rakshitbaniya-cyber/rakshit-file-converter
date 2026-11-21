@@ -501,8 +501,8 @@ def uploaded_profile_photo(filename):
 
     return send_from_directory(UPLOAD_FOLDER, safe_name)
 
-
 # ---------------- FEEDBACK ----------------
+
 @app.route("/feedback", methods=["POST"])
 def submit_feedback():
     rating_value = request.form.get("rating", "").strip()
@@ -520,18 +520,21 @@ def submit_feedback():
         return jsonify(error="Comment must be 2000 characters or less."), 400
 
     user_id = session.get("user_id")
-with db() as con:
-    cur = con.execute("""
-        INSERT INTO feedback(user_id, rating, comment, status)
-        VALUES(?, ?, ?, 'pending')
-    """, (user_id, rating, comment or None))
 
-    feedback_id = cur.lastrowid
+    with db() as con:
+        cur = con.execute("""
+            INSERT INTO feedback(user_id, rating, comment, status)
+            VALUES(?, ?, ?, 'pending')
+        """, (user_id, rating, comment or None))
 
-    user = con.execute(
-        "SELECT email FROM users WHERE id = ?",
-        (user_id,)
-    ).fetchone() if user_id else None
+        feedback_id = cur.lastrowid
+
+        user = None
+        if user_id:
+            user = con.execute(
+                "SELECT email FROM users WHERE id = ?",
+                (user_id,)
+            ).fetchone()
 
     sync_to_google_sheet(
         "Feedback Details",
@@ -546,10 +549,12 @@ with db() as con:
             ""
         ]
     )
+
     return jsonify(
         success=True,
         message="Thank you! Your feedback has been submitted and is awaiting admin approval."
     )
+
 @app.route("/admin/feedback")
 @login_required
 @admin_required
