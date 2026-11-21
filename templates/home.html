@@ -1363,13 +1363,7 @@ function addChatMessage(message, sender, save = true) {
 
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
-    if (q.includes("feedback") || q.includes("review")) {
-        return "Toolify homepage par Share Your Feedback section mein jaayein. 1 se 5 stars select karein, optional comment likhein aur Submit Feedback par click karein. Aapka feedback admin approval ke baad public reviews mein show ho sakta hai.";
-    }
 
-    if (q.includes("contact") || q.includes("support") || q.includes("help")) {
-        return "Aap apna question yahin chat mein type kar sakte hain. Toolify Support chatbot common questions mein help karta hai.";
-    }
 function getFAQAnswer(question) {
     const q = question.toLowerCase();
 
