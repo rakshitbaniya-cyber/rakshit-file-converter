@@ -141,11 +141,9 @@ def init_db():
         }
 
         if "status" not in existing_feedback_columns:
-            con.execute("""
-                ALTER TABLE feedback
-                ADD COLUMN status TEXT NOT NULL DEFAULT 'pending'
-            """)
-(
+
+        con.execute("""
+            CREATE TABLE IF NOT EXISTS feedback (
                 id INTEGER PRIMARY KEY,
                 user_id INTEGER,
                 rating INTEGER NOT NULL,
@@ -154,6 +152,19 @@ def init_db():
                 FOREIGN KEY(user_id) REFERENCES users(id)
             )
         """)
+
+        # Add approval status to existing feedback databases safely.
+        existing_feedback_columns = {
+            row["name"]
+            for row in con.execute("PRAGMA table_info(feedback)").fetchall()
+        }
+
+        if "status" not in existing_feedback_columns:
+            con.execute("""
+                ALTER TABLE feedback
+                ADD COLUMN status TEXT NOT NULL DEFAULT 'pending'
+            """)
+            
 
 
 init_db()
